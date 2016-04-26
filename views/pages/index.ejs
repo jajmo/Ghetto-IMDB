@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+    <style>
+        .row-border, #search {
+            border: solid;
+            border-width: 2px;
+            border-color: #ddd;
+            border-radius: 4px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+        }
+
+        .input-button {
+            display: flex !important;
+        }
+
+        .input-group {
+            margin: 0 auto;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Browse Movies</h1>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Browse</a></li>
+                        <li><a href="/submit">New Movie</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Profile</a></li>
+                                <li><a href="/movies/my">My Movies</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>   
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Search..." />
+                    <div class="input-button">
+                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+        <% movies.forEach(function (movie) { %>
+
+        <% }); %>
+        </table>
+        <!-- TODO: Never ending scroll thing -->
+    </div>
+    <% include ../partials/scripts %>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <% include ../partials/head %>
     <style>
-        .row-border, #search {
+        #search {
             border: solid;
             border-width: 2px;
             border-color: #ddd;
@@ -21,11 +21,28 @@
             margin: 0 auto;
             padding-bottom: 5px;
         }
+
+        .carousel {
+            padding-left: 5%;
+            padding-right: 5%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-control {
+            padding-top: 10%;
+            width: 5%;
+        }
+
+        html {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <h1>Browse Movies</h1>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -47,7 +64,7 @@
                     </ul>   
                 </div>
             </div>
-        </div>
+        </nav>
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
@@ -58,11 +75,56 @@
                 </div>
             </div>
         </div>
-        <table class="table">
-        <% movies.forEach(function (movie) { %>
+    <% movies.forEach(function (genre) { %>
+    <div class="row">
+        <h2>
+            <%= genre.genre %>
+            <button data-toggle="collapse" data-target="#movie-carousel-<%= genre.genre %>" class="btn btn-default btn-collapse">Collapse</button>
+        </h2>
+    </div>
+    <div class="carousel slide collapse in" id="movie-carousel-<%= genre.genre %>" data-toggle="collapse" data-interval="false" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+    <%  
+        var i = 6;
+        var count = genre.movies.length;
+        genre.movies.forEach(function (movie) {
+          if (i === 6) { 
+    %>
+            <div class="item active">
+                <div class="row">
+    <%    } else if (i % 6 === 0)  { %>
+            <div class="item">
+                <div class="row">
+    <%    } %>
+                    <div class="col-md-2">
+                            <h3><%= movie.title %></h3>
+                        <div class="row">
+                            <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>" data-toggle="collapse">
+                                <button class="btn btn-primary" id="save-button" data-id="<%= movie._id %>">Save</button>
+                            </div>
+                            <div class="col-md-12 collapse" id="watched-buttons-<%= movie._id %>" data-toggle="collapse">
+                                <button class="btn btn-default watched-btn" data-id="<%= movie._id %>">Have not watched</button>
+                                <button class="btn btn-primary watched-btn" data-id="<%= movie._id %>">Have watched</button>
+                                <button class="btn btn-warning watched-btn" data-id="<%= movie._id %>">Will not watch</button>
+                            </div>
+                        </div>
+                    </div>
+    <%  if (++i % 6 === 0 || --count <= 1) { %>
+                </div>
+            </div>
+    <%
+           }
+        }); 
+    %>
+        </div>
+        <a class="left carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="next">›</a>
+    </div>
+    <% }); %>
 
-        <% }); %>
-        </table>
         <!-- TODO: Never ending scroll thing -->
     </div>
     <% include ../partials/scripts %>

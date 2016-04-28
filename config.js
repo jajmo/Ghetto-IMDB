@@ -7,5 +7,6 @@ exports.mongoConfig = {
 
 exports.serverConfig = {
     metadataSource: '',
-    markOption: ''
+    markOption: '',
+    cookieName: "sessID"
 };

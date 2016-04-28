@@ -2,16 +2,43 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var movieData = require('./data.js');
+var userData = require('./users.js');
+var bcrypt = require('bcrypt-nodejs');
+var cookieParser = require('cookie-parser');
+var config = require('./config.js');
 
-// We create our express isntance:
 var app = express();
 
-app.use(bodyParser.json()); // for parsing application/json
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.use('/assets', express.static('static'));
 
-// If you'll notice, there's not a single database call in the server file!
+// Routes that only authenticated users can view
+// Supports regex
+var restrictedRoutes = [ /\/profile*/ ];
+
+app.use(function (request, response, next) {
+    var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;
+    url = request.url;
+
+    userData.isLoggedIn(cookieVal, response).then(function (res) {
+        if (res !== null && cookieVal !== undefined) {
+            response.locals.user = res;
+        } else {
+            response.locals.user = null;
+            restrictedRoutes.forEach(function (route) {
+                if (route.test(url)) {
+                    response.redirect("/");
+                }
+            });
+        }
+
+        next();
+    });
+});
+
 app.get("/", function (request, response) {
     var genres = [
         {
@@ -66,7 +93,7 @@ app.get("/", function (request, response) {
         }
     ]
     movieData.getAllMovies().then(function (movies) {
-        response.render("pages/index", { movies: genres });
+        response.render("pages/index", { movies: genres, user: response.locals.user });
     });
 });
 
@@ -121,10 +148,58 @@ app.delete('/api/movies/:id', function(request, response) {
     });
 });
 
-// Get a user's profile
+/** User management routes **/
+
+app.post("/login", function (request, response) {
+    if (response.locals.user !== null) {
+        response.redirect("/");
+    }
+
+    userData.getPassHash(request.body.username).then(function (passHash) {
+        userData.login(request.body.username, bcrypt.compareSync(request.body.password, passHash), response).then(function (valid) {
+            response.redirect("/");
+        }).catch(function (err) {
+            response.redirect("/login");
+        });
+    }).catch(function (err) {
+        response.redirect("/login");
+    });
+});
+
+app.post("/register", function (request, response) {
+    if (response.locals.user !== null) {
+        response.redirect("/");
+    }
+
+    if (request.body.username.trim() === "" || request.body.password.trim() === "" || request.body.realname.trim() === "") {
+        response.redirect("/");
+        return;
+    }
+
+    userData.createUser(request.body.username.trim(), bcrypt.hashSync(request.body.password.trim()), request.body.realname.trim()).then(function (data) {
+        response.redirect("/");
+    }).catch(function (err) {
+        response.redirect("/");
+    });
+});
+
+app.get("/logout", function (request, response) {
+    if (response.locals.user === null) {
+        response.redirect("/");
+    }
+
+    userData.logout(request.cookies[config.serverConfig.cookieName], response).then(function (res) {
+        response.locals.user = null;
+        response.redirect("/");
+    });
+});
+
+app.get("/login", function (request, response) {
+    response.render("pages/login", { title: "Login" });
+});
+
 app.get('/profile', function (request, response) {
-    // TODO: Send data with this
-    response.render('pages/profile');
+    response.render('pages/profile', { user: response.locals.user });
 });
 
 // We can now navigate to localhost:3000

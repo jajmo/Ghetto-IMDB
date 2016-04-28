@@ -68,6 +68,12 @@ app.delete("/api/movies/:id", function(request, response) {
     });
 });
 
+// Get a user's profile
+app.get("/profile", function (request, response) {
+    // TODO: Send data with this
+    response.render('pages/profile');
+})
+
 // We can now navigate to localhost:3000
 app.listen(3000, function() {
     console.log('Your server is now listening on port 3000! Navigate to http://localhost:3000 to access it');

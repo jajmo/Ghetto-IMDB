@@ -17,4 +17,9 @@
         $("#save-button-div-" + id).collapse("show");
     });
 
+    $("h2").on("click", ".btn-collapse", function (e) {
+        var text = $(this).html() === "Collapse" ? "Expand" : "Collapse";
+        $(this).html(text);
+    });
+
 })(window.jQuery);

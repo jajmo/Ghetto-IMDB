@@ -1,6 +1,10 @@
 node_modules
 
-*.pdf
+# outputs from pdflatex
+documentation/*.aux
+documentation/*.log
+documentation/*.pdf
 
+# archive files
 *.tar.gz
 *.zip

@@ -58,11 +58,28 @@
                 </div>
             </div>
         </div>
-        <table class="table">
-        <% movies.forEach(function (movie) { %>
+        <div class="row row-border">
+            <h3>Sci-Fi</h3>
+            <div class="col-md-2">
+                <div class="row">
+                    <h4>Ex-Machina</h4>
+                </div>
+                <div class="row">
+                    <img class="col-md-12" src="http://www.joblo.com/posters/images/full/ex-machina-poster.jpg" alt="Ex-Machina Cover">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 collapse in" id="save-button-div" data-toggle="collapse">
+                        <button class="btn btn-primary" id="save-button">Save</button>
+                    </div>
+                    <div class="col-md-12 collapse" id="watched-buttons" data-toggle="collapse">
+                        <button class="btn btn-default watched-btn">Have not watched</button>
+                        <button class="btn btn-primary watched-btn">Have watched</button>
+                        <button class="btn btn-warning watched-btn">Will not watch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <% }); %>
-        </table>
         <!-- TODO: Never ending scroll thing -->
     </div>
     <% include ../partials/scripts %>

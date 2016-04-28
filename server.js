@@ -54,6 +54,16 @@ app.get("/", function (request, response) {
                     image: "https://upload.wikimedia.org/wikipedia/en/b/b0/Moon_(2008)_film_poster.jpg"
                 }
             ]
+        },
+        {
+            genre: "Action",
+            movies: [
+                {
+                    _id: 8,
+                    title: "The Avengers",
+                    image: "http://www.coverwhiz.com/content/The-Avengers.jpg"
+                }
+            ]
         }
     ]
     movieData.getAllMovies().then(function (movies) {

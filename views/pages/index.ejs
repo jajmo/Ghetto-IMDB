@@ -4,7 +4,7 @@
 <head>
     <% include ../partials/head %>
     <style>
-        .row-border, #search {
+        #search {
             border: solid;
             border-width: 2px;
             border-color: #ddd;
@@ -21,11 +21,27 @@
             margin: 0 auto;
             padding-bottom: 5px;
         }
+
+        .carousel {
+            padding-left: 5%;
+            padding-right: 5%;
+            width: 100%;
+        }
+
+        .carousel-control {
+            padding-top: 10%;
+            width: 5%;
+        }
+
+        html {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <h1>Browse Movies</h1>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -62,12 +78,11 @@
     <div class="row">
         <h2>
             <%= genre.genre %>
-            <button data-toggle="collapse" data-target="#<%= genre.genre %>" class="btn btn-default btn-collapse">Collapse</button>
+            <button data-toggle="collapse" data-target="#movie-carousel-<%= genre.genre %>" class="btn btn-default btn-collapse">Collapse</button>
         </h2>
     </div>
-    <div class="carousel slide" id="<%= genre.genre %> movie-carousel" data-ride="carousel">
+    <div class="carousel slide collapse in" id="movie-carousel-<%= genre.genre %>" data-toggle="collapse" data-interval="false" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
-            <div class="row row-border">
     <%  
         var i = 6;
         var count = genre.movies.length;
@@ -83,9 +98,7 @@
           i++;
     %>
                     <div class="col-md-2">
-                        <div class="row">
                             <h3><%= movie.title %></h3>
-                        </div>
                         <div class="row">
                             <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
                         </div>
@@ -107,8 +120,9 @@
            }
         }); 
     %>
-            </div>
         </div>
+        <a class="left carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="next">›</a>
     </div>
     <% }); %>
 

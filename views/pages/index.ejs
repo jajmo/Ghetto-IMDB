@@ -26,6 +26,7 @@
             padding-left: 5%;
             padding-right: 5%;
             width: 100%;
+            overflow: hidden;
         }
 
         .carousel-control {
@@ -91,12 +92,10 @@
     %>
             <div class="item active">
                 <div class="row">
-    <%    } else if (i !== 6 && i % 6 === 0)  { %>
+    <%    } else if (i % 6 === 0)  { %>
             <div class="item">
                 <div class="row">
-    <%    } 
-          i++;
-    %>
+    <%    } %>
                     <div class="col-md-2">
                             <h3><%= movie.title %></h3>
                         <div class="row">
@@ -113,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-    <%  if (i % 6 == 0 || (i % 6 !== 0 && --count == 1)) { %>
+    <%  if (++i % 6 === 0 || --count <= 1) { %>
                 </div>
             </div>
     <%

@@ -42,6 +42,16 @@ app.get("/", function (request, response) {
                     _id: 5,
                     title: "The Terminator",
                     image: "https://s-media-cache-ak0.pinimg.com/736x/9f/22/5e/9f225e7f09852e9400d58cf6e712eeee.jpg"
+                },
+                {
+                    _id: 6,
+                    title: "Prometheus",
+                    image: "http://1.bp.blogspot.com/-_mKfatjsC6s/ULl1sCNWCLI/AAAAAAAAGt0/-xv3BwxvC9s/s1600/prometheus-movie-wallpaper-10.jpg"
+                },
+                {
+                    _id: 7,
+                    title: "Moon",
+                    image: "https://upload.wikimedia.org/wikipedia/en/b/b0/Moon_(2008)_film_poster.jpg"
                 }
             ]
         }

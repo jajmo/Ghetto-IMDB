@@ -65,28 +65,49 @@
             <button data-toggle="collapse" data-target="#<%= genre.genre %>" class="btn btn-default btn-collapse">Collapse</button>
         </h2>
     </div>
-    <div class="collapse in" id="<%= genre.genre %>" data-toggle="collapse">
-        <div class="row row-border">
-        <% genre.movies.forEach(function (movie) { %>
-            <div class="col-md-2">
+    <div class="carousel slide" id="<%= genre.genre %> movie-carousel" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            <div class="row row-border">
+    <%  
+        var i = 6;
+        var count = genre.movies.length;
+        genre.movies.forEach(function (movie) {
+          if (i === 6) { 
+    %>
+            <div class="item active">
                 <div class="row">
-                    <h3><%= movie.title %></h3>
-                </div>
+    <%    } else if (i !== 6 && i % 6 === 0)  { %>
+            <div class="item">
                 <div class="row">
-                    <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
-                </div>
-                <div class="row">
-                    <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>" data-toggle="collapse">
-                        <button class="btn btn-primary" id="save-button" data-id="<%= movie._id %>">Save</button>
+    <%    } 
+          i++;
+    %>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <h3><%= movie.title %></h3>
+                        </div>
+                        <div class="row">
+                            <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>" data-toggle="collapse">
+                                <button class="btn btn-primary" id="save-button" data-id="<%= movie._id %>">Save</button>
+                            </div>
+                            <div class="col-md-12 collapse" id="watched-buttons-<%= movie._id %>" data-toggle="collapse">
+                                <button class="btn btn-default watched-btn" data-id="<%= movie._id %>">Have not watched</button>
+                                <button class="btn btn-primary watched-btn" data-id="<%= movie._id %>">Have watched</button>
+                                <button class="btn btn-warning watched-btn" data-id="<%= movie._id %>">Will not watch</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-12 collapse" id="watched-buttons-<%= movie._id %>" data-toggle="collapse">
-                        <button class="btn btn-default watched-btn" data-id="<%= movie._id %>">Have not watched</button>
-                        <button class="btn btn-primary watched-btn" data-id="<%= movie._id %>">Have watched</button>
-                        <button class="btn btn-warning watched-btn" data-id="<%= movie._id %>">Will not watch</button>
-                    </div>
+    <%  if (i % 6 == 0 || (i % 6 !== 0 && --count == 1)) { %>
                 </div>
             </div>
-        <% }); %>
+    <%
+           }
+        }); 
+    %>
+            </div>
         </div>
     </div>
     <% }); %>

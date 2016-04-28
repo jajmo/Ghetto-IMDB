@@ -17,7 +17,7 @@ app.use('/assets', express.static('static'));
 
 // Routes that only authenticated users can view
 // Supports regex
-var restrictedRoutes = [ /\/profile*/ ];
+var restrictedRoutes = [ /\/profile*/, /\/movies\/my*/ ];
 
 app.use(function (request, response, next) {
     var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;

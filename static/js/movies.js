@@ -2,7 +2,7 @@
 
     // TODO: We're going to need data-* attributes to prevent expanding/collapsing/etc all of
     // the buttons at once
-    $('div').on('click', '#save-button', function (e) {
+    $('div').on('click', '.save-button', function (e) {
         var id = $(this).attr('data-id');
         $('#save-button-div-' + id).collapse('hide');
         $('#watched-buttons-' + id).collapse('show');
@@ -33,6 +33,15 @@
                 }
             });
         }
+    });
+
+
+    // Display overlay when the user hovers over a movie panel
+    $('.movie-panel').on('mouseenter', function () {
+        $(this).find('.movie-panel-overlay').finish();
+        $(this).find('.movie-panel-overlay').fadeIn(150);
+    }).on('mouseleave', function () {
+        $(this).find('.movie-panel-overlay').fadeOut(150);
     });
 
 })(window.jQuery);

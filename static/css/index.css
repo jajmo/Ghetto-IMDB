@@ -59,6 +59,7 @@ html {
 .movie-panel-overlay h3 {
     margin: 15px 15px;
     color: #fff;
+    font-size: 28px;
 }
 
 /* dirty, but w/e. selects the button container divs */

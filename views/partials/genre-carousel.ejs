@@ -1,16 +1,12 @@
 <section class="genre-carousel">
-    <div class="row">
-        <h2>
-            <%= genre.genre %>
-            <button
-                data-toggle="collapse"
-                data-target="#movie-carousel-<%= genre.genre %>"
-                class="btn btn-default btn-collapse"
-            >
-                Collapse
-            </button>
-        </h2>
-    </div>
+    <h2>
+        <%= genre.genre %>
+        <button
+            data-toggle="collapse"
+            data-target="#movie-carousel-<%= genre.genre %>"
+            class="btn btn-default btn-collapse"
+        >Collapse</button>
+    </h2>
 
     <div
         class="carousel slide collapse in"
@@ -21,9 +17,7 @@
     >
         <div class="carousel-inner" role="listbox">
 
-<%    var i = 6;
-            var count = genre.movies.length;
-            var movieArrClone = genre.movies.slice();
+<%    var movieArrClone = genre.movies.slice();
             var groups = [];
             var isFirst = true;
 

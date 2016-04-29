@@ -44,4 +44,13 @@
         $(this).find('.movie-panel-overlay').fadeOut(150);
     });
 
+
+    // Why do I need to specify this hook? I'm not sure -- mabye because
+    // bootstrap = dick
+    $('.input-group').on('focus', '.form-control', function () {
+        $(this).closest('.form-group, .input-group').addClass('focus');
+    }).on('blur', '.form-control', function () {
+        $(this).closest('.form-group, .input-group').removeClass('focus');
+    });
+
 })(window.jQuery);

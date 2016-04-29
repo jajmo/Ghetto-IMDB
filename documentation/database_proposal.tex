@@ -1,0 +1,172 @@
+% Jason Ajmo, Patrick Grasso, Nicholas Massa, Bradford Smith and Nicholas Zubrycki
+% CS 546 Final Project proposal.tex
+% 03/23/2016
+% "We pledge our honor that we have abided by the Stevens Honor System."
+% ======================================================================
+
+% global document styles =======================================================
+\documentclass[11pt, letterpaper]{article}
+\usepackage[letterpaper, margin=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{textcomp}
+\usepackage{xcolor} %for colored code formatting
+\usepackage{listings} %for multi-line formatted code
+\usepackage{booktabs} %for better looking tables
+\pagestyle{empty}
+\setlength{\tabcolsep}{0em}
+
+
+% custom macros ================================================================
+% simple inline code formatting (using typewriter font)
+%\newcommand{\code}[1]{\texttt{#1}}
+
+% colored inline code formatting
+\definecolor{codebg}{RGB}{225,225,225}
+\definecolor{codefg}{RGB}{200,40,90}
+\newcommand{\code}[1]{\colorbox{codebg}{\textcolor{codefg}{\texttt{#1}}}}
+
+\lstdefinestyle{customJS}{
+    backgroundcolor=\color{codebg},
+    keepspaces=true
+}
+\lstset{style=customJS}
+
+
+% document begins here =========================================================
+\begin{document}
+\noindent{Jason Ajmo, Patrick Grasso, Nicholas Massa, Bradford Smith and Nicholas Zubrycki}\\
+\noindent{CS 546 Final Project Database Proposal}\\
+\noindent{\today}\\
+\noindent{\textit{``We pledge our honor that we have abided by the Stevens Honor System.''}}\\
+
+\bigskip
+
+\noindent{\Large{Ghetto IMDB}}
+
+\begin{itemize}
+    \item[\textbullet]Jason Ajmo
+    \item[\textbullet]Patrick Grasso
+    \item[\textbullet]Nicholas Massa
+    \item[\textbullet]Bradford Smith
+    \item[\textbullet]Nicholas Zubrycki
+\end{itemize}
+
+
+\noindent{\Large{Users}}
+
+\bigskip
+
+\begin{lstlisting}
+{
+    "_id":
+    "username":
+    "real_name":
+    "password":
+    "profile_text":
+    "starred_movie":
+}
+\end{lstlisting}
+
+\bigskip
+
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{| c | c | c |}
+    \toprule
+    Name & Type & Description \\
+    \midrule
+    \_id & string & A globally unique identifier to represent the user\\
+    \midrule
+    username & string & A string representing the user's login name\\
+    \midrule
+    real\_name & string & A string representing the user's real name\\
+    \midrule
+    password & string & A hash of the user's password\\
+    \midrule
+    profile\_text & string & A string representing text the user puts on their profile\\
+    \midrule
+    starred\_movie & string & A globally unique identifier to represent a movie that the user has starred\\
+    \bottomrule
+\end{tabular}
+
+\bigskip
+
+\noindent{\Large{Users\_movies}}
+
+\bigskip
+
+\begin{lstlisting}
+{
+    "user_id":
+    "movie_id":
+    "seen":
+}
+\end{lstlisting}
+
+\bigskip
+
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{| c | c | c |}
+    \toprule
+    Name & Type & Description \\
+    \midrule
+    user\_id & string & A globally unique identifier representing a user\\
+    \midrule
+    movie\_id & string & A globally unique identifier representing a movie\\
+    \midrule
+    seen & string & A string representing the ``seen'' status of the movie\\
+    \bottomrule
+\end{tabular}
+
+\bigskip
+\bigskip
+\bigskip
+
+\noindent{\Large{Movies}}
+
+\bigskip
+
+\begin{lstlisting}
+{
+    "_id":
+    "title":
+    "description":
+    "genre":
+    "image":
+    "actors":
+    "director":
+    "user_rating":
+    "critic_rating":
+}
+\end{lstlisting}
+
+\bigskip
+
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{| c | c | c |}
+    \toprule
+    Name & Type & Description \\
+    \midrule
+    \_id & string & A globally unique identifier to represent the movie\\
+    \midrule
+    title & string & A string representing the title of the movie\\
+    \midrule
+    description & string & A string representing a description of the movie\\
+    \midrule
+    genre & string & A string representing the genre of the movie\\
+    \midrule
+    image & url & A url pointing to an image for the movie\\
+    \midrule
+    actors & list & A list of strings representing actors in the movie\\
+    \midrule
+    director & string & A string representing the name of the director of the movie\\
+    \midrule
+    user\_rating & integer & A numeric rating of the movie by users\\
+    \midrule
+    critic\_rating & integer & A numeric rating of the movie by critics\\
+    \bottomrule
+\end{tabular}
+
+\end{document}
+

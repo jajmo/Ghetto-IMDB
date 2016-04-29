@@ -1,0 +1,71 @@
+% Jason Ajmo, Patrick Grasso, Nicholas Massa, Bradford Smith and Nicholas Zubrycki
+% CS 546 Final Project proposal.tex
+% 03/20/2016
+% "We pledge our honor that we have abided by the Stevens Honor System."
+% ======================================================================
+
+% global document styles =======================================================
+\documentclass[11pt, letterpaper]{article}
+\usepackage[letterpaper, margin=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}
+\usepackage{textcomp}
+\usepackage{xcolor} %for colored code formatting
+\pagestyle{empty}
+\setlength{\tabcolsep}{0em}
+
+
+% custom macros ================================================================
+% simple inline code formatting (using typewriter font)
+%\newcommand{\code}[1]{\texttt{#1}}
+
+% colored inline code formatting
+\definecolor{codebg}{RGB}{225,225,225}
+\definecolor{codefg}{RGB}{200,40,90}
+\newcommand{\code}[1]{\colorbox{codebg}{\textcolor{codefg}{\texttt{#1}}}}
+
+
+% document begins here =========================================================
+\begin{document}
+\noindent{Jason Ajmo, Patrick Grasso, Nicholas Massa, Bradford Smith and Nicholas Zubrycki}\\
+\noindent{CS 546 Final Project Proposal}\\
+\noindent{\today}\\
+\noindent{\textit{``We pledge our honor that we have abided by the Stevens Honor System.''}}\\
+
+\noindent{\Large{Group}}
+
+\begin{itemize}
+    \item[\textbullet]Jason Ajmo
+    \item[\textbullet]Patrick Grasso
+    \item[\textbullet]Nicholas Massa
+    \item[\textbullet]Bradford Smith
+    \item[\textbullet]Nicholas Zubrycki
+\end{itemize}
+
+
+\noindent{\Large{Description}}
+
+\bigskip
+
+Our project will be a movie management system. Upon logging in, a user will be able to manage their movies to watch and movies they've seen. Upon adding a movie, relevant metadata will automatically be fetched from online sources. A user would be able to give a movie a rating, and mark it as ``seen'', ``going to watch'', or ``not going to watch''. A user can search their saved movies by genre, title, year, or a combination of all three.
+
+\bigskip
+
+\noindent{\Large{Core Features}}
+
+\begin{itemize}
+    \item[\textbullet]Marking movies as ``seen'', ``going to watch'', or ``not going to watch''. The default option will be configurable.
+    \item[\textbullet]Being able to search movies based on multiple criteria.
+    \item[\textbullet]Adding new movies to the user's profile.
+    \item[\textbullet]Fetching metadata automatically. The default source will the be configurable.
+\end{itemize}
+
+\noindent{\Large{Extras}}
+
+\begin{itemize}
+    \item[\textbullet]Redis.
+    \item[\textbullet]Machine learning to suggest new movies to watch.
+\end{itemize}
+\end{document}
+

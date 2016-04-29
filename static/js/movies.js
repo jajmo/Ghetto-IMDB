@@ -28,7 +28,7 @@
     $('.navbar .navbar-nav li').each(function (_, li) {
         if (li.children instanceof HTMLCollection && li.children.length > 0) {
             $(li.children).each(function (_, child) {
-                if (child.href === document.location.href) {
+                if (child.href === document.location.href.split('#')[0]) {
                     li.classList.add('active');
                 }
             });

@@ -1,10 +1,11 @@
 #search {
-    border: solid;
-    border-width: 2px;
-    border-color: #ddd;
-    border-radius: 4px;
     padding-bottom: 5px;
     padding-left: 5px;
+    background-color: #ecf0f1;
+}
+
+#search + .input-group-btn button {
+    background-color: #ecf0f1;
 }
 
 .input-button {
@@ -32,4 +33,24 @@
 html {
     padding-left: 5px;
     padding-right: 5px;
+}
+
+body {
+    background-color: #34495e;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ecf0f1;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 20px;
 }

@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient
     , settings = require('./config.js')
-    , Guid = require('guid');
+    , uuid = require('node-uuid');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
@@ -44,7 +44,7 @@ MongoClient.connect(fullMongoUrl)
 
         return movieCollection
             .insertOne({
-                _id: Guid.create().toString(),
+                _id: uuid.v4(),
                 title: title,
                 rating: rating
             }).then(function (newDoc) {

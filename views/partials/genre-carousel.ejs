@@ -30,7 +30,7 @@
                     <div class="row">
 
 <%          group.forEach(function (movie) { %>
-<%            include ../partials/movie-panel %>
+<%-           include('../partials/movie-panel', { user: user, movie: movie }); %>
 <%          }); %>
 
                     </div>

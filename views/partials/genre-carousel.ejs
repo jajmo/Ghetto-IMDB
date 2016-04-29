@@ -1,0 +1,52 @@
+<section class="genre-carousel">
+    <div class="row">
+        <h2>
+            <%= genre.genre %>
+            <button
+                data-toggle="collapse"
+                data-target="#movie-carousel-<%= genre.genre %>"
+                class="btn btn-default btn-collapse"
+            >
+                Collapse
+            </button>
+        </h2>
+    </div>
+
+    <div
+        class="carousel slide collapse in"
+        id="movie-carousel-<%= genre.genre %>"
+        data-toggle="collapse"
+        data-interval="false"
+        data-ride="carousel"
+    >
+        <div class="carousel-inner" role="listbox">
+
+<%    var i = 6;
+            var count = genre.movies.length;
+            var movieArrClone = genre.movies.slice();
+            var groups = [];
+            var isFirst = true;
+
+            while (movieArrClone.length > 0)  {
+                groups.push(movieArrClone.splice(0, 6));
+            }
+
+            groups.forEach(function (group) { %>
+                <div class="item <%=(isFirst) ? 'active' : ''%>">
+                    <div class="row">
+
+<%          group.forEach(function (movie) { %>
+<%            include ../partials/movie-panel %>
+<%          }); %>
+
+                    </div>
+                </div>
+
+<%      isFirst = false;
+            }); %>
+
+        </div>
+        <a class="left carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="next">›</a>
+    </div>
+</section>

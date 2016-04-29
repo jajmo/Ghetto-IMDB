@@ -3,131 +3,33 @@
 
 <head>
     <% include ../partials/head %>
-    <style>
-        #search {
-            border: solid;
-            border-width: 2px;
-            border-color: #ddd;
-            border-radius: 4px;
-            padding-bottom: 5px;
-            padding-left: 5px;
-        }
-
-        .input-button {
-            display: flex !important;
-        }
-
-        .input-group {
-            margin: 0 auto;
-            padding-bottom: 5px;
-        }
-
-        .carousel {
-            padding-left: 5%;
-            padding-right: 5%;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .carousel-control {
-            padding-top: 10%;
-            width: 5%;
-        }
-
-        html {
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-    </style>
+    <link type="text/css" ref="stylesheet" src="/assets/css/index.css" />
 </head>
 
-<body>
-    <div class="container-fluid">
-        <h1>Browse Movies</h1>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">Browse</a></li>
-                        <li><a href="/submit">New Movie</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/profile">Profile</a></li>
-                                <li><a href="/movies/my">My Movies</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/logout">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>   
-                </div>
-            </div>
-        </nav>
+<body class="container-fluid">
+    <h1>Browse Movies</h1>
+    <% include ../partials/nav %>
+    <section class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
                     <input type="text" name="search" id="search" class="form-control" placeholder="Search..." />
-                    <div class="input-button">
-                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-secondary">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
-    <% movies.forEach(function (genre) { %>
-    <div class="row">
-        <h2>
-            <%= genre.genre %>
-            <button data-toggle="collapse" data-target="#movie-carousel-<%= genre.genre %>" class="btn btn-default btn-collapse">Collapse</button>
-        </h2>
-    </div>
-    <div class="carousel slide collapse in" id="movie-carousel-<%= genre.genre %>" data-toggle="collapse" data-interval="false" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-    <%  
-        var i = 6;
-        var count = genre.movies.length;
-        genre.movies.forEach(function (movie) {
-          if (i === 6) { 
-    %>
-            <div class="item active">
-                <div class="row">
-    <%    } else if (i % 6 === 0)  { %>
-            <div class="item">
-                <div class="row">
-    <%    } %>
-                    <div class="col-md-2">
-                            <h3><%= movie.title %></h3>
-                        <div class="row">
-                            <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>" data-toggle="collapse">
-                                <button class="btn btn-primary" id="save-button" data-id="<%= movie._id %>">Save</button>
-                            </div>
-                            <div class="col-md-12 collapse" id="watched-buttons-<%= movie._id %>" data-toggle="collapse">
-                                <button class="btn btn-default watched-btn" data-id="<%= movie._id %>">Have not watched</button>
-                                <button class="btn btn-primary watched-btn" data-id="<%= movie._id %>">Have watched</button>
-                                <button class="btn btn-warning watched-btn" data-id="<%= movie._id %>">Will not watch</button>
-                            </div>
-                        </div>
-                    </div>
-    <%  if (++i % 6 === 0 || --count <= 1) { %>
-                </div>
-            </div>
-    <%
-           }
-        }); 
-    %>
-        </div>
-        <a class="left carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="prev">‹</a>
-        <a class="right carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="next">›</a>
-    </div>
-    <% }); %>
+    </section>
 
-        <!-- TODO: Never ending scroll thing -->
-    </div>
-    <% include ../partials/scripts %>
+<% movies.forEach(function (genre) { %>
+<%   include ../partials/genre-carousel %>
+<% }); %>
+
+    <!-- TODO: Never ending scroll thing -->
+<% include ../partials/scripts %>
 </body>
 
 </html>

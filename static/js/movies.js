@@ -13,7 +13,7 @@
         var id = $(this).attr('data-id');
 
         $('#watched-buttons-' + id).collapse('hide');
-        $('#save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
+        $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
         $('#save-button-div-' + id).collapse('show');
     });
 

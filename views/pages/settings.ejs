@@ -9,11 +9,11 @@
     <div class="container">
         <h1>Settings</h1>
         <% include ../partials/nav %>
-        <form class="form-horizontal" action="/api/user/update" method="POST">
+        <form class="form-horizontal" id="edit-form" action="/api/user/update" method="POST" data-toggle="validator" role="form">
             <div class="form-group row">
                 <label for="profileText" class="col-sm-2 form-control-label">Profile Text</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="5" id="profileText" placeholder="Profile text"><%= user.profileText %></textarea>
+                    <textarea class="form-control" rows="5" name="profileText" id="profileText" placeholder="Profile text"><%= user.profileText %></textarea>
                 </div>
             </div>
             <hr>
@@ -26,20 +26,21 @@
             <div class="form-group row">
                 <label for="realName" class="col-sm-2 form-control-label">Real Name</label>
                 <div class="col-sm-10">
-                    <input type="text" id="realName" class="form-control" value="<%= user.realName %>" placeholder="Real name">
+                    <input type="text" id="realName" name="realName" class="form-control" value="<%= user.realName %>" placeholder="Real name" required>
                 </div>
+                <div class="help-block with-errors"></div>
             </div>
             <hr>
             <div class="form-group row">
                 <label for="password" class="col-sm-2 form-control-label">New Password</label>
                 <div class="col-sm-10">
-                    <input type="password" id="password" class="form-control" placeholder="New password">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="New password">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="passwordConfirm" class="col-sm-2 form-control-label">Confirm New Password</label>
                 <div class="col-sm-10">
-                    <input type="password" id="passwordConfirm" class="form-control" placeholder="Confirm new password">
+                    <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="Confirm new password">
                 </div>
             </div>
             <div class="form-group row">

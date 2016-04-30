@@ -52,5 +52,4 @@
     }).on('blur', '.form-control', function () {
         $(this).closest('.form-group, .input-group').removeClass('focus');
     });
-
 })(window.jQuery);

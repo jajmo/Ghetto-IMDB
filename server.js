@@ -208,14 +208,24 @@ app.get('/settings', function (request, response) {
 app.post('/api/user/update', function (request, response) {
     var uid = response.locals.user._id;
     var profile = request.body.profileText;
+    var realname = request.body.realName;
+    var password = request.body.password;
+    var passConfirm = request.body.passwordConfirm;
 
-    if (!uid || !profile) {
-        return "1";
+    if (!uid || !realname) {
+        console.log("Something went wrong");
+        response.redirect("/settings");
+        return;
     }
 
-    userData.updateProfile(uid, profile).then(function (res) {
-        console.log(res);
-        response.redirect("/profile");
+    var newPass = (password && password == passConfirm) ? bcrypt.hashSync(password.trim()) : null;
+
+    userData.updateProfile(uid, profile, realname, newPass).then(function (res) {
+        if (newPass) {
+            response.redirect("/logout");
+        } else {
+            response.redirect("/profile");
+        }
     });
 });
 

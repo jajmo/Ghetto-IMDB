@@ -16,7 +16,7 @@ app.use('/assets', express.static('static'));
 
 // Routes that only authenticated users can view
 // Supports regex
-var restrictedRoutes = [ /\/profile*/, /\/movies\/my*/ ];
+var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user\/update*/ ];
 
 app.use(function (request, response, next) {
     var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;
@@ -199,6 +199,24 @@ app.get("/login", function (request, response) {
 
 app.get('/profile', function (request, response) {
     response.render('pages/profile', { user: response.locals.user });
+});
+
+app.get('/settings', function (request, response) {
+    response.render('pages/settings', { user: response.locals.user });
+});
+
+app.post('/api/user/update', function (request, response) {
+    var uid = response.locals.user._id;
+    var profile = request.body.profileText;
+
+    if (!uid || !profile) {
+        return "1";
+    }
+
+    userData.updateProfile(uid, profile).then(function (res) {
+        console.log(res);
+        response.redirect("/profile");
+    });
 });
 
 // We can now navigate to localhost:3000

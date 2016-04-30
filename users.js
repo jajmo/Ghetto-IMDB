@@ -10,8 +10,17 @@ MongoClient.connect(fullMongoUrl)
         return db.createCollection("users");
     }).then(function (userCollection) {
 
+        // Update a user's profile
+        exports.updateProfile = function (uid, profileText) {
+            console.log(uid);
+            console.log(profileText);
+            return userCollection.update({ _id: uid }, { $set : { profileText: profileText.trim() }}).then(function (res) {
+                console.log(res);
+            });
+        };
+
         // Check if a user is logged in
-        exports.isLoggedIn = function(cookieValue, response) {
+        exports.isLoggedIn = function (cookieValue, response) {
             return userCollection.findOne({ currentSessionId: cookieValue }).then(function (doc) {
                 if (doc === null && cookieValue !== undefined) {
                     var anHourAgo = new Date();

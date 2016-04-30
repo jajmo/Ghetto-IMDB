@@ -45,7 +45,7 @@
     });
 
 
-    // Why do I need to specify this hook? I'm not sure -- mabye because
+    // Why do I need to specify this hook? I'm not sure -- maybe because
     // bootstrap = dick
     $('.input-group').on('focus', '.form-control', function () {
         $(this).closest('.form-group, .input-group').addClass('focus');

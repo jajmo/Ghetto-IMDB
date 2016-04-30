@@ -93,7 +93,7 @@ app.get("/", function (request, response) {
         }
     ]
     movieData.getAllMovies().then(function (movies) {
-        response.render("pages/index", { movies: genres, user: response.locals.user });
+        response.render("pages/index", { pageTitle: 'Browse', movies: genres, user: response.locals.user });
     });
 });
 
@@ -131,7 +131,7 @@ app.post('/api/movies', function(request, response) {
     });
 });
 
-// Update a movie 
+// Update a movie
 app.put('/api/movies/:id', function(request, response) {
     movieData.updateMovie(request.params.id, request.body.title, request.body.rating).then(function(movie) {
         response.json(movie);

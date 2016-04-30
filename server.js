@@ -1,4 +1,3 @@
-// We first require our express package
 var express = require('express');
 var bodyParser = require('body-parser');
 var movieData = require('./data.js');

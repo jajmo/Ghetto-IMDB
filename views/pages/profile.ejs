@@ -29,11 +29,11 @@
                     <h4>Ex-Machina</h4>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-7">
-                    <p>Some profile text.<br />Another line.<br />Another line.</p>
-                </div>
-                <img class="col-md-5" src="http://www.joblo.com/posters/images/full/ex-machina-poster.jpg" alt="Ex-Machina Cover">
+        </div>
+        <div class="row">
+            <div class="col-md-7">
+                <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
+                <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
             </div>
         </div>
     </div>

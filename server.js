@@ -16,7 +16,7 @@ app.use('/assets', express.static('static'));
 
 // Routes that only authenticated users can view
 // Supports regex
-var restrictedRoutes = [ /\/profile*/, /\/movies\/my*/ ];
+var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user\/update*/ ];
 
 app.use(function (request, response, next) {
     var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;
@@ -199,6 +199,34 @@ app.get("/login", function (request, response) {
 
 app.get('/profile', function (request, response) {
     response.render('pages/profile', { user: response.locals.user });
+});
+
+app.get('/settings', function (request, response) {
+    response.render('pages/settings', { user: response.locals.user });
+});
+
+app.post('/api/user/update', function (request, response) {
+    var uid = response.locals.user._id;
+    var profile = request.body.profileText;
+    var realname = request.body.realName;
+    var password = request.body.password;
+    var passConfirm = request.body.passwordConfirm;
+
+    if (!uid || !realname) {
+        console.log("Something went wrong");
+        response.redirect("/settings");
+        return;
+    }
+
+    var newPass = (password && password == passConfirm) ? bcrypt.hashSync(password.trim()) : null;
+
+    userData.updateProfile(uid, profile, realname, newPass).then(function (res) {
+        if (newPass) {
+            response.redirect("/logout");
+        } else {
+            response.redirect("/profile");
+        }
+    });
 });
 
 // We can now navigate to localhost:3000

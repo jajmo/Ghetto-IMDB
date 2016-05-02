@@ -18,8 +18,25 @@
     });
 
     $('h2').on('click', '.btn-collapse', function (e) {
-        var text = $(this).html() === 'Collapse' ? 'Expand' : 'Collapse';
-        $(this).html(text);
+        if (this.dataset.expanded === 'true') {
+            $(this).animate({ rotateAmount: -90 }, {
+                step: function (now, fx) {
+                    console.log(now);
+                    $(this).css('transform', 'rotate(' + now + 'deg)');
+                },
+                duration: 150
+            });
+            this.dataset.expanded = false;
+        } else {
+            $(this).animate({ rotateAmount: 0 }, {
+                step: function (now, fx) {
+                    console.log(now);
+                    $(this).css('transform', 'rotate(' + now + 'deg)');
+                },
+                duration: 150
+            });
+            this.dataset.expanded = true;
+        }
     });
 
     // For every <li><a href=[path]></a></li>, if the path is equal to the current

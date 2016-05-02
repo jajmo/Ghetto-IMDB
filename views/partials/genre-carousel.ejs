@@ -3,9 +3,10 @@
         <%= genre.genre %>
         <button
             data-toggle="collapse"
+            data-expanded="true"
             data-target="#movie-carousel-<%= genre.genre %>"
-            class="btn btn-default btn-collapse"
-        >Collapse</button>
+            class="expand-button btn-collapse"
+        ><span class="caret"></span></button>
     </h2>
 
     <div

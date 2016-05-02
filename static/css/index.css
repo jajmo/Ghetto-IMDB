@@ -35,6 +35,15 @@
     align-items: center;
 }
 
+.genre-carousel .expand-button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
 html {
     padding-left: 5px;
     padding-right: 5px;

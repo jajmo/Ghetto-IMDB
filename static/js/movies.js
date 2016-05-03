@@ -21,7 +21,6 @@
         if (this.dataset.expanded === 'true') {
             $(this).animate({ rotateAmount: -90 }, {
                 step: function (now, fx) {
-                    console.log(now);
                     $(this).css('transform', 'rotate(' + now + 'deg)');
                 },
                 duration: 150
@@ -30,7 +29,6 @@
         } else {
             $(this).animate({ rotateAmount: 0 }, {
                 step: function (now, fx) {
-                    console.log(now);
                     $(this).css('transform', 'rotate(' + now + 'deg)');
                 },
                 duration: 150

@@ -10,17 +10,17 @@
 </head>
 
 <body class="container-fluid">
-    <h1>Browse Movies</h1>
+    <h1><%= pageHeader %></h1>
     <%- include('../partials/nav', { user: user }); %>
     <section class="container-fluid">
-        <div class="input-group">
+        <form class="input-group" method="post" action="/search">
             <input type="text" name="search" id="search" class="form-control" placeholder="Search..." />
             <span class="input-group-btn">
-                <button type="button" class="btn btn-secondary">
+                <button type="submit" class="btn btn-secondary">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 </button>
             </span>
-        </div>
+        </form>
     </section>
 <h3><%= movies %></h3>
 <% for (var genre in movies) { %>

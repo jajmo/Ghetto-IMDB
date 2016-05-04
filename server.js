@@ -52,9 +52,10 @@ app.get("/", function (request, response) {
             });
         });
 
-        response.render("pages/index", { 
-            pageTitle: 'Browse', 
-            movies: movies, 
+        response.render("pages/index", {
+            pageTitle: 'Browse',
+            pageHeader: 'Browse Movies',
+            movies: movies,
             user: response.locals.user,
             watchOptions: config.serverConfig.watchOptions
         });
@@ -63,6 +64,21 @@ app.get("/", function (request, response) {
 
 app.get("/submit", function (request, response) {
     response.render("pages/submitMovie", { user: response.locals.user });
+});
+
+app.post("/search", function (request, response) {
+    var query = request.body.search;
+    var movies = [];
+
+    //TODO: do searching and populate movies
+
+    response.render("pages/index", {
+        pageTitle: 'Search Results',
+        pageHeader: 'Search Results',
+        movies: movies,
+        user: response.locals.user,
+        watchOptions: config.serverConfig.watchOptions
+    });
 });
 
 app.post("/api/movies/submit", function (request, response) {

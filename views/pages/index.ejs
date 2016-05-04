@@ -22,10 +22,10 @@
             </span>
         </div>
     </section>
-
-<% movies.forEach(function (genre) { %>
-<%- include('../partials/genre-carousel', { user: user, genre: genre, watchOptions: watchOptions }); %>
-<% }); %>
+<h3><%= movies %></h3>
+<% for (var genre in movies) { %>
+    <%- include('../partials/genre-carousel', { user: user, genre: genre, movies: movies[genre], watchOptions: watchOptions }); %>
+<% } %>
 
     <!-- TODO: Never ending scroll thing -->
 <% include ../partials/scripts %>

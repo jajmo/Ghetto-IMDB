@@ -39,62 +39,22 @@ app.use(function (request, response, next) {
 });
 
 app.get("/", function (request, response) {
-    var genres = [
-        {
-            genre: "Sci-Fi",
-            movies: [
-                {
-                    _id: 1,
-                    title: "Ex-Machina",
-                    image: "http://www.joblo.com/posters/images/full/ex-machina-poster.jpg"
-                },
-                {
-                    _id: 2,
-                    title: "The Matrix",
-                    image: "http://www.coverwhiz.com/content/The-Matrix.jpg"
-                },
-                {
-                    _id: 3,
-                    title: "Alien",
-                    image: "http://www.pxleyes.com/images/contests/movie-poster-recreation/fullsize/movie-poster-recreation-52953fe575c29.jpg"
-                },
-                {
-                    _id: 4,
-                    title: "Star Wars: The Force Awakens",
-                    image: "https://milnersblog.files.wordpress.com/2016/03/star-wars-the-force-awakens-dvd-box-cover-artwork1.jpg"
-                },
-                {
-                    _id: 5,
-                    title: "The Terminator",
-                    image: "https://s-media-cache-ak0.pinimg.com/736x/9f/22/5e/9f225e7f09852e9400d58cf6e712eeee.jpg"
-                },
-                {
-                    _id: 6,
-                    title: "Prometheus",
-                    image: "http://1.bp.blogspot.com/-_mKfatjsC6s/ULl1sCNWCLI/AAAAAAAAGt0/-xv3BwxvC9s/s1600/prometheus-movie-wallpaper-10.jpg"
-                },
-                {
-                    _id: 7,
-                    title: "Moon",
-                    image: "https://upload.wikimedia.org/wikipedia/en/b/b0/Moon_(2008)_film_poster.jpg"
+    movieData.getAllMovies().then(function (moviesList) {
+        var movies = [];
+
+        moviesList.forEach(function (movie) {
+            movie.genre.forEach(function (genre) {
+                if (!movies[genre]) {
+                    movies[genre] = [];
                 }
-            ]
-        },
-        {
-            genre: "Action",
-            movies: [
-                {
-                    _id: 8,
-                    title: "The Avengers",
-                    image: "http://www.coverwhiz.com/content/The-Avengers.jpg"
-                }
-            ]
-        }
-    ]
-    movieData.getAllMovies().then(function (movies) {
+
+                movies[genre].push(movie);
+            });
+        });
+
         response.render("pages/index", { 
             pageTitle: 'Browse', 
-            movies: genres, 
+            movies: movies, 
             user: response.locals.user,
             watchOptions: config.serverConfig.watchOptions
         });

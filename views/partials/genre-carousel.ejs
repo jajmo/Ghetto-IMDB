@@ -1,24 +1,24 @@
 <section class="genre-carousel">
     <h2>
-        <%= genre.genre %>
+        <%= genre %>
         <button
             data-toggle="collapse"
             data-expanded="true"
-            data-target="#movie-carousel-<%= genre.genre %>"
+            data-target="#movie-carousel-<%= genre %>"
             class="expand-button btn-collapse"
         ><span class="caret"></span></button>
     </h2>
 
     <div
         class="carousel slide collapse in"
-        id="movie-carousel-<%= genre.genre %>"
+        id="movie-carousel-<%= genre %>"
         data-toggle="collapse"
         data-interval="false"
         data-ride="carousel"
     >
         <div class="carousel-inner" role="listbox">
 
-<%    var movieArrClone = genre.movies.slice();
+<%    var movieArrClone = movies.slice();
             var groups = [];
             var isFirst = true;
 
@@ -41,7 +41,7 @@
             }); %>
 
         </div>
-        <a class="left carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="prev">‹</a>
-        <a class="right carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="next">›</a>
+        <a class="left carousel-control" href="#movie-carousel-<%= genre %>" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#movie-carousel-<%= genre %>" data-slide="next">›</a>
     </div>
 </section>

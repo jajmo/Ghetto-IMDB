@@ -162,11 +162,11 @@ app.post('/api/user/watchMovie/:id', function (request, response) {
         console.log("Something went wrong");
         response.json({ err: "Invalid parameters" });
     } else {
-        userData.watchMovie(id, uid, state).then(function (response) {
-            if (response === true) {
+        userData.watchMovie(id, uid, state).then(function (res) {
+            if (res === true) {
                 response.json();
             } else {
-                response.json({ err: response });
+                response.json({ err: res });
             }
         }).catch(function (err) {
             console.log(err);

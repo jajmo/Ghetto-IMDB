@@ -75,6 +75,12 @@ MongoClient.connect(fullMongoUrl)
             });
     };
 
+    exports.movieExists = function (id) {
+        return movieCollection.findOne({ _id: id }).then(function (movie) {
+            return movie !== undefined;
+        });
+    };
+
     exports.addMovie = function (title, year) {
         // Let's get some API in here
         request(encodeURI("http://omdbapi.com?t=" + title + "&y=" + year), function (error, response, body) {

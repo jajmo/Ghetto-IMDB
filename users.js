@@ -103,7 +103,7 @@ MongoClient.connect(fullMongoUrl)
                     currentSessionId: null,
                     realName: realName,
                     profileText: null,
-                    movies: { }
+                    movies: []
                 };
 
                 userCollection.insertOne(userObject);
@@ -120,14 +120,17 @@ MongoClient.connect(fullMongoUrl)
         };
 
         exports.watchMovie = function (mid, uid, state) {
-            return movies.getMovie(mid).then(function (movie) {
+            return movies.movieExists(mid).then(function (movie) {
                 if (!movie) {
                     return Promise.reject("Invalid movie ID");
                 }
 
-                movie.state = state;
+                var insert = {
+                    id: mid,
+                    state: state
+                }
 
-                userCollection.update({ _id: uid }, { $addToSet: { movies: movie }}).then(function (res) {
+                userCollection.update({ _id: uid }, { $addToSet: { movies: insert }}).then(function (res) {
                     return 1;
                 });
             });

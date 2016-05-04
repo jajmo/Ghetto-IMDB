@@ -29,10 +29,6 @@ MongoClient.connect(fullMongoUrl)
             .limit(1)
             .toArray()
             .then(function(listOfMovies) {
-                if (listOfMovies.length === 0) {
-                    throw new ReferenceError('Could not find movie with id of ' + id);
-                }
-
                 return listOfMovies[0];
             });
     };

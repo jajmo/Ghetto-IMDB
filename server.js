@@ -71,8 +71,18 @@ app.get('/', function (request, response) {
     });
 });
 
-app.get('/submit', function (request, response) {
-    response.render('pages/submitMovie', { user: response.locals.user });
+app.get("/movie/:id", function (request, response) {
+    movieData.getMovie(request.params.id).then(function (movie) {
+        if (!movie) {
+            response.redirect("/");
+        } else {
+            response.render("pages/movie", { user: response.locals.user, movie: movie, pageTitle: movie.title });
+        }
+    })
+});
+
+app.get("/submit", function (request, response) {
+    response.render("pages/submitMovie", { user: response.locals.user });
 });
 
 app.post('/search', function (request, response) {

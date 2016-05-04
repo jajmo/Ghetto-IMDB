@@ -6,37 +6,35 @@
     <link type="text/css" ref="stylesheet" src="/assets/css/profile.css" />
 </head>
 
-<body>
-    <div class="container-fluid">
-        <h1><%= user.username %>'s Profile</h1>
-        <% include ../partials/nav %>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Real name: <%= user.realName %></h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-7">
-                    <h3>Profile</h3>
-                </div>
-                <div class="col-md-5">
-                    <h3>Featured Movie</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 col-md-offset-7">
-                    <h4>Ex-Machina</h4>
-                </div>
+<body class="container-fluid">
+    <% include ../partials/nav %>
+    <h1><%= user.username %>'s Profile</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Real name: <%= user.realName %></h2>
             </div>
         </div>
         <div class="row">
             <div class="col-md-7">
-                <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
-                <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
+                <h3>Profile</h3>
+            </div>
+            <div class="col-md-5">
+                <h3>Featured Movie</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-7">
+                <h4>Ex-Machina</h4>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-7">
+            <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
+            <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
+        </div>
+    </div>
+    <%- include('../partials/genre-carousel', { user: user, genre: "Saved Movies", movies: movies }); %>
     <% include ../partials/scripts %>
 </body>
 

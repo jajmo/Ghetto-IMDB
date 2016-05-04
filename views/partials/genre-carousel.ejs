@@ -19,8 +19,9 @@
         <div class="carousel-inner" role="listbox">
 
 <%    var movieArrClone = movies.slice();
-            var groups = [];
+            var groups  = [];
             var isFirst = true;
+      var watchOptions  = (watchOptions) ? watchOptions : undefined;
 
             while (movieArrClone.length > 0)  {
                 groups.push(movieArrClone.splice(0, 6));

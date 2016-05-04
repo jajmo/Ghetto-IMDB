@@ -3,7 +3,7 @@
         <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
         <div class="movie-panel-overlay">
             <h3><%= movie.title %></h3>
-                <% if (user) { %>
+                <% if (user && watchOptions !== undefined) { %>
                     <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>" data-toggle="collapse">
                         <button class="btn btn-primary save-button" data-id="<%= movie._id %>">Save</button>
                     </div>

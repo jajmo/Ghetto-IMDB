@@ -11,10 +11,6 @@ MongoClient.connect(fullMongoUrl)
         return db.createCollection("users");
     }).then(function (userCollection) {
 
-        const SEEN = 1;
-        const GOING_TO_SEE = 2;
-        const WILL_NOT_SEE = 3;
-
         // Update a user's profile
         exports.updateProfile = function (uid, profileText, realName, password) {
             var updateSet = { 
@@ -112,11 +108,16 @@ MongoClient.connect(fullMongoUrl)
             });
         };
 
-        // TODO: This needs to be finished
         exports.getAllMovies = function (uid) {
-           /* userCollection.find({ _id: uid, { $or: [ "movies.$.state": SEEN, "movies.$.state":  GOING_TO_SEE ]}}).toArray().then(function (result) {
-                console.log(result);
-            });*/
+            return userCollection.findOne({ _id: uid, "movies.$.state": settings.serverConfig.watched }).then(function (result) {
+                var ids = [];
+
+                result.movies.forEach(function (movie) {
+                    ids.push(movie.id);
+                });
+
+                return ids;
+            });
         };
 
         exports.watchMovie = function (mid, uid, state) {

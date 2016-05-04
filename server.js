@@ -121,7 +121,9 @@ app.get("/login", function (request, response) {
 
 app.get('/profile', function (request, response) {
     userData.getAllMovies(response.locals.user._id).then(function (movies) {
-        response.render('pages/profile', { user: response.locals.user, movies: movies });
+        movieData.getMoviesByIDs(movies).then(function (moviesList) {
+            response.render('pages/profile', { user: response.locals.user, movies: moviesList });
+        });
     });
 });
 

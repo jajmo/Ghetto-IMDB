@@ -16,7 +16,7 @@ app.use('/assets', express.static('static'));
 
 // Routes that only authenticated users can view
 // Supports regex
-var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user*/ ];
+var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user*/, /\/api\/movies*/, /\/submit*/ ];
 
 app.use(function (request, response, next) {
     var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;
@@ -99,6 +99,15 @@ app.get("/", function (request, response) {
             watchOptions: config.serverConfig.watchOptions
         });
     });
+});
+
+app.get("/submit", function (request, response) {
+    response.render("pages/submitMovie", { user: response.locals.user });
+});
+
+app.post("/api/movies/submit", function (request, response) {
+    movieData.addMovie(request.body.title, request.body.year);
+    response.redirect("/");
 });
 
 /** User management routes **/

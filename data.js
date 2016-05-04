@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient
     , settings = require('./config.js')
-    , uuid = require('node-uuid');
+    , uuid = require('node-uuid')
+    , request = require('request');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
@@ -34,32 +35,6 @@ MongoClient.connect(fullMongoUrl)
     };
 
 
-    exports.createMovie = function(title, rating) {
-        if (!title) {
-            return Promise.reject('You must provide a title');
-        }
-        if (rating == null || rating === undefined || rating < 0 || rating > 5) {
-            return Promise.reject('You have provided an invalid rating');
-        }
-
-        return movieCollection
-            .insertOne({
-                _id: uuid.v4(),
-                title: title,
-                rating: rating
-            }).then(function (newDoc) {
-                return newDoc.insertedId;
-            }).then(function (newId) {
-                return exports.getMovie(newId);
-            });
-    };
-
-
-    exports.getPopularMovies = function() {
-        return movieCollection.find({ rating: { $gte: 3 } }).toArray();
-    };
-
-
     exports.updateMovie = function(id, newTitle, newRating) {
         if (!id) {
             return Promise.reject('You must provide an ID');
@@ -84,7 +59,7 @@ MongoClient.connect(fullMongoUrl)
     };
 
 
-    exports.deleteMovie = function(id) {
+    exports.deleteMovie = function (id) {
         if (!id) {
             return Promise.Reject('You must provide an ID');
         }
@@ -98,6 +73,27 @@ MongoClient.connect(fullMongoUrl)
 
                 return true;
             });
+    };
+
+    exports.addMovie = function (title, year) {
+        // Let's get some API in here
+        request(encodeURI("http://omdbapi.com?t=" + title + "&y=" + year), function (error, response, body) {
+            var movie = JSON.parse(body);
+            if (!movie.error) {
+                var doc = {
+                    title: movie.Title,
+                    description: movie.Plot,
+                    genre: movie.Genre.split(", "),
+                    image: movie.Poster,
+                    actors: movie.Actors,
+                    director: movie.Director,
+                    userRating: 0,
+                    criticRating: movie.imdbRating
+                };
+
+                movieCollection.insertOne(doc);
+            }
+        });
     };
 
 });

@@ -11,11 +11,14 @@ MongoClient.connect(fullMongoUrl)
     var movieCollection = db.collection('movies');
 
 
+    //= functions to get movie(s) ==============================================
+
+    //get a list of all movies
     exports.getAllMovies = function() {
         return movieCollection.find().toArray();
     };
 
-
+    //get a single movie by id
     exports.getMovie = function(id) {
         if (!id) {
             return Promise.reject('You must provide an ID');
@@ -34,6 +37,45 @@ MongoClient.connect(fullMongoUrl)
             });
     };
 
+    //get a list of movies by a list of ids
+    exports.getMoviesByIDs = function (ids) {
+        return movieCollection.find({ _id: { $in: ids }}).toArray();
+    };
+
+    //get a list of movies by a title
+    exports.getMoviesByTitle = function (title) {
+        if (!title) {
+            return Promise.reject('You must provide a title');
+        }
+        // TODO:
+    };
+
+    //get a list of movies by a genre
+    exports.getMoviesByGenre = function (genre) {
+        if (!genre) {
+            return Promise.reject('You must provide a genre');
+        }
+        // TODO:
+    };
+
+    //get a list of movies by an actor
+    exports.getMoviesByActor = function (actor) {
+        if (!actor) {
+            return Promise.reject('You must provide a actor');
+        }
+        // TODO:
+    };
+
+    //get a list of movies by director
+    exports.getMoviesByDirector = function (director) {
+        if (!director) {
+            return Promise.reject('You must provide a director');
+        }
+        // TODO:
+    };
+
+
+    //= all other operations ===================================================
 
     exports.updateMovie = function(id, newTitle, newRating) {
         if (!id) {
@@ -105,10 +147,6 @@ MongoClient.connect(fullMongoUrl)
                 });
             }
         });
-    };
-
-    exports.getMoviesByIDs = function (ids) {
-        return movieCollection.find({ _id: { $in: ids }}).toArray();
     };
 });
 

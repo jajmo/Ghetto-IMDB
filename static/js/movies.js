@@ -11,10 +11,26 @@
 
     $('div').on('click', '.watched-btn', function (e) {
         var id = $(this).attr('data-id');
+        var state = $(this).attr('data-state');
 
-        $('#watched-buttons-' + id).collapse('hide');
-        $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
-        $('#save-button-div-' + id).collapse('show');
+        var request = {
+            url: "/api/user/watchMovie/" + id,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                state: state
+            })
+        };
+
+        $.ajax(request).then(function (response) {
+            if (!response.err) {
+                $('#watched-buttons-' + id).collapse('hide');
+                $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
+                $('#save-button-div-' + id).collapse('show');
+            } else {
+                console.log(response.err);
+            }
+        });
     });
 
     $('h2').on('click', '.btn-collapse', function (e) {

@@ -7,6 +7,10 @@ exports.mongoConfig = {
 
 exports.serverConfig = {
     metadataSource: '',
-    markOption: '',
+    watchOptions: {
+        notWatched: 1,
+        watched: 2,
+        willNotWatch: 3
+    },
     cookieName: "sessID"
 };

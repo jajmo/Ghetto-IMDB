@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient,
     settings = require('./config.js'),
-    uuid = require('node-uuid');
+    uuid = require('node-uuid'),
+    movies = require('./data.js');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
@@ -14,7 +15,8 @@ MongoClient.connect(fullMongoUrl)
         exports.updateProfile = function (uid, profileText, realName, password) {
             var updateSet = { 
                 profileText: profileText.trim(), 
-                realName: realName };
+                realName: realName
+            };
 
             if (password) {
                 updateSet.encryptedPassword = password;
@@ -96,7 +98,8 @@ MongoClient.connect(fullMongoUrl)
                     encryptedPassword: passwordHash,
                     currentSessionId: null,
                     realName: realName,
-                    profileText: null
+                    profileText: null,
+                    movies: []
                 };
 
                 userCollection.insertOne(userObject);
@@ -104,4 +107,33 @@ MongoClient.connect(fullMongoUrl)
                 return "Account created. You can now login";
             });
         };
+
+        exports.getAllMovies = function (uid) {
+            return userCollection.findOne({ _id: uid, "movies.$.state": settings.serverConfig.watched }).then(function (result) {
+                var ids = [];
+
+                result.movies.forEach(function (movie) {
+                    ids.push(movie.id);
+                });
+
+                return ids;
+            });
+        };
+
+        exports.watchMovie = function (mid, uid, state) {
+            return movies.movieExists(mid).then(function (movie) {
+                if (!movie) {
+                    return Promise.reject("Invalid movie ID");
+                }
+
+                var insert = {
+                    id: mid,
+                    state: state
+                }
+
+                userCollection.update({ _id: uid }, { $addToSet: { movies: insert }}).then(function (res) {
+                    return 1;
+                });
+            });
+        };  
     });

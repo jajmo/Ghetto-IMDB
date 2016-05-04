@@ -11,14 +11,17 @@
                         <button
                             class="btn btn-default watched-btn"
                             data-id="<%= movie._id %>"
+                            data-state="<%= watchOptions.notWatched %>"
                         >Have not watched</button>
                         <button
                             class="btn btn-primary watched-btn"
                             data-id="<%= movie._id %>"
+                            data-state="<%= watchOptions.watched %>"
                         >Have watched</button>
                         <button
                             class="btn btn-warning watched-btn"
                             data-id="<%= movie._id %>"
+                            data-state="<%= watchOptions.willNotWatch %>"
                         >Will not watch</button>
                     </div>
                 <% } %>

@@ -16,7 +16,7 @@ app.use('/assets', express.static('static'));
 
 // Routes that only authenticated users can view
 // Supports regex
-var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user\/update*/ ];
+var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user*/ ];
 
 app.use(function (request, response, next) {
     var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;
@@ -92,63 +92,16 @@ app.get("/", function (request, response) {
         }
     ]
     movieData.getAllMovies().then(function (movies) {
-        response.render("pages/index", { pageTitle: 'Browse', movies: genres, user: response.locals.user });
-    });
-});
-
-// Get the best movies
-app.get('/api/movies/best', function(request, response) {
-    movieData
-        .getPopularMovies()
-        .then(function(popularMovies){
-            response.json(popularMovies);
+        response.render("pages/index", { 
+            pageTitle: 'Browse', 
+            movies: genres, 
+            user: response.locals.user,
+            watchOptions: config.serverConfig.watchOptions
         });
-});
-
-// Get a single movie
-app.get('/api/movies/:id', function(request, response) {
-    movieData.getMovie(request.params.id).then(function(movie) {
-        response.json(movie);
-    }, function(errorMessage) {
-        response.status(500).json({ error: errorMessage });
-    });
-});
-
-// Get all the movies
-app.get('/api/movies', function(request, response) {
-    movieData.getAllMovies().then(function(movieList) {
-        response.json(movieList);
-    });
-});
-
-// Create a movie
-app.post('/api/movies', function(request, response) {
-    movieData.createMovie(request.body.title, request.body.rating).then(function(movie) {
-        response.json(movie);
-    }, function(errorMessage) {
-        response.status(500).json({ error: errorMessage });
-    });
-});
-
-// Update a movie
-app.put('/api/movies/:id', function(request, response) {
-    movieData.updateMovie(request.params.id, request.body.title, request.body.rating).then(function(movie) {
-        response.json(movie);
-    }, function(errorMessage) {
-        response.json({ error: errorMessage });
-    });
-});
-
-app.delete('/api/movies/:id', function(request, response) {
-    movieData.deleteMovie(request.params.id).then(function(status) {
-        response.json({success: status});
-    }, function(errorMessage) {
-        response.json({ error: errorMessage });
     });
 });
 
 /** User management routes **/
-
 app.post("/login", function (request, response) {
     if (response.locals.user !== null) {
         response.redirect("/");
@@ -198,7 +151,9 @@ app.get("/login", function (request, response) {
 });
 
 app.get('/profile', function (request, response) {
-    response.render('pages/profile', { user: response.locals.user });
+    userData.getAllMovies(response.locals.user._id).then(function (movies) {
+        response.render('pages/profile', { user: response.locals.user, movies: movies });
+    });
 });
 
 app.get('/settings', function (request, response) {
@@ -227,6 +182,32 @@ app.post('/api/user/update', function (request, response) {
             response.redirect("/profile");
         }
     });
+});
+
+app.post('/api/user/watchMovie/:id', function (request, response) {
+    var id = request.params.id;
+    var uid = response.locals.user._id;
+    var state = request.body.state;
+
+    if (!id || !uid || !state) {
+        console.log("Something went wrong");
+        response.json({ err: "Invalid parameters" });
+    } else {
+        userData.watchMovie(id, uid, state).then(function (response) {
+            if (response === true) {
+                response.json();
+            } else {
+                response.json({ err: response });
+            }
+        }).catch(function (err) {
+            console.log(err);
+            response.json({ err: err });
+        });
+    }
+});
+
+app.get('*', function (request, response) {
+    response.redirect("/");
 });
 
 // We can now navigate to localhost:3000

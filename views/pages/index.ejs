@@ -24,7 +24,7 @@
     </section>
 
 <% movies.forEach(function (genre) { %>
-<%- include('../partials/genre-carousel', { user: user, genre: genre }); %>
+<%- include('../partials/genre-carousel', { user: user, genre: genre, watchOptions: watchOptions }); %>
 <% }); %>
 
     <!-- TODO: Never ending scroll thing -->

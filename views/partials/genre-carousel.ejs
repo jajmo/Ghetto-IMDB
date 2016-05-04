@@ -31,7 +31,7 @@
                     <div class="row">
 
 <%          group.forEach(function (movie) { %>
-<%-           include('../partials/movie-panel', { user: user, movie: movie }); %>
+<%-           include('../partials/movie-panel', { user: user, movie: movie, watchOptions: watchOptions }); %>
 <%          }); %>
 
                     </div>

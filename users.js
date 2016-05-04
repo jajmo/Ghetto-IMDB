@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient,
     settings = require('./config.js'),
-    uuid = require('node-uuid');
+    uuid = require('node-uuid'),
+    movies = require('./data.js');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
@@ -10,11 +11,16 @@ MongoClient.connect(fullMongoUrl)
         return db.createCollection("users");
     }).then(function (userCollection) {
 
+        const SEEN = 1;
+        const GOING_TO_SEE = 2;
+        const WILL_NOT_SEE = 3;
+
         // Update a user's profile
         exports.updateProfile = function (uid, profileText, realName, password) {
             var updateSet = { 
                 profileText: profileText.trim(), 
-                realName: realName };
+                realName: realName
+            };
 
             if (password) {
                 updateSet.encryptedPassword = password;
@@ -96,7 +102,8 @@ MongoClient.connect(fullMongoUrl)
                     encryptedPassword: passwordHash,
                     currentSessionId: null,
                     realName: realName,
-                    profileText: null
+                    profileText: null,
+                    movies: { }
                 };
 
                 userCollection.insertOne(userObject);
@@ -104,4 +111,25 @@ MongoClient.connect(fullMongoUrl)
                 return "Account created. You can now login";
             });
         };
+
+        // TODO: This needs to be finished
+        exports.getAllMovies = function (uid) {
+           /* userCollection.find({ _id: uid, { $or: [ "movies.$.state": SEEN, "movies.$.state":  GOING_TO_SEE ]}}).toArray().then(function (result) {
+                console.log(result);
+            });*/
+        };
+
+        exports.watchMovie = function (mid, uid, state) {
+            return movies.getMovie(mid).then(function (movie) {
+                if (!movie) {
+                    return Promise.reject("Invalid movie ID");
+                }
+
+                movie.state = state;
+
+                userCollection.update({ _id: uid }, { $addToSet: { movies: movie }}).then(function (res) {
+                    return 1;
+                });
+            });
+        };  
     });

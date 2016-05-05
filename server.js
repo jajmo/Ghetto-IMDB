@@ -68,16 +68,25 @@ app.get("/submit", function (request, response) {
 
 app.post("/search", function (request, response) {
     var query = request.body.search;
-    var movies = [];
+    movieData.getMoviesByTitle(query).then(function (titleList) {
+        var movies = [];
 
-    //TODO: do searching and populate movies
+        //TODO: do searching and populate movies
+        titleList.forEach(function (movie) {
+            if (!movies['Title']) {
+                movies['Title'] = [];
+            }
 
-    response.render("pages/index", {
-        pageTitle: 'Search Results',
-        pageHeader: 'Search Results',
-        movies: movies,
-        user: response.locals.user,
-        watchOptions: config.serverConfig.watchOptions
+            movies['Title'].push(movie);
+        });
+
+        response.render("pages/index", {
+            pageTitle: 'Search Results',
+            pageHeader: 'Search Results',
+            movies: movies,
+            user: response.locals.user,
+            watchOptions: config.serverConfig.watchOptions
+        });
     });
 });
 

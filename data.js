@@ -47,7 +47,8 @@ MongoClient.connect(fullMongoUrl)
         if (!title) {
             return Promise.reject('You must provide a title');
         }
-        // TODO:
+
+        return movieCollection.find({ title: { $regex: '.*' + title + '.*', $options: 'i' } }).toArray();
     };
 
     //get a list of movies by a genre
@@ -55,7 +56,8 @@ MongoClient.connect(fullMongoUrl)
         if (!genre) {
             return Promise.reject('You must provide a genre');
         }
-        // TODO:
+
+        return movieCollection.find({ genre: { $regex: '.*' + genre + '.*', $options: 'i' } }).toArray();
     };
 
     //get a list of movies by an actor
@@ -63,7 +65,8 @@ MongoClient.connect(fullMongoUrl)
         if (!actor) {
             return Promise.reject('You must provide a actor');
         }
-        // TODO:
+
+        return movieCollection.find({ actors: { $regex: '.*' + actor + '.*', $options: 'i' } }).toArray();
     };
 
     //get a list of movies by director
@@ -71,7 +74,8 @@ MongoClient.connect(fullMongoUrl)
         if (!director) {
             return Promise.reject('You must provide a director');
         }
-        // TODO:
+
+        return movieCollection.find({ director: { $regex: '.*' + director + '.*', $options: 'i' } }).toArray();
     };
 
 

@@ -71,8 +71,8 @@ app.get('/', function (request, response) {
     });
 });
 
-app.get("/submit", function (request, response) {
-    response.render("pages/submitMovie", { user: response.locals.user });
+app.get('/submit', function (request, response) {
+    response.render('pages/submitMovie', { user: response.locals.user });
 });
 
 app.post('/search', function (request, response) {

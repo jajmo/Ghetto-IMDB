@@ -51,9 +51,10 @@ MongoClient.connect(fullMongoUrl)
             }
 
             var sessID = uuid.v4();
-            userCollection.updateOne({ username: username }, { $set: { currentSessionId: sessID }});
-            response.cookie(settings.serverConfig.cookieName, sessID);
-            return '1';
+            return userCollection.updateOne({ username: username }, { $set: { currentSessionId: sessID }}).then(function (res) {
+                response.cookie(settings.serverConfig.cookieName, sessID);
+                return '1';
+            });
         });
     };
 

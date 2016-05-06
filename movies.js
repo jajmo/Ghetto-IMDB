@@ -166,7 +166,7 @@ MongoClient.connect(fullMongoUrl)
                             }
                         });
                     } else {
-                        reject("Invalid movie");
+                        reject('Invalid movie');
                     }
                 }
             );
@@ -175,23 +175,23 @@ MongoClient.connect(fullMongoUrl)
 
     exports.voteOnMovie = function (id, rating, uid) {
         if (!rating || rating > 10) {
-            return Promise.reject("Invalid rating: " + rating);
+            return Promise.reject('Invalid rating: ' + rating);
         }
 
         return movieCollection.findOne({ _id: id, voters: { $ne: uid }}).then(function (movie) {
             if (!movie) {
-                return Promse.reject("Invalid movie");
+                return Promse.reject('Invalid movie');
             } else {
-                movieCollection.update({ _id: movie._id }, 
-                    { 
-                      $set: {  
+                movieCollection.update({ _id: movie._id },
+                    {
+                        $set: {
                         userVotes: movie.userVotes + 1,
                         userTotalRating: movie.userTotalRating + rating
-                      },
-                      $push: { voters: uid }
+                        },
+                        $push: { voters: uid }
                     }
                 ).then(function (res) {
-                    return "Good";
+                    return 'Good';
                 });
             }
         });

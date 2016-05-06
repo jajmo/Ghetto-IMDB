@@ -6,6 +6,9 @@ documentation/*.aux
 documentation/*.log
 documentation/*.pdf
 
+# mongodump output
+dump/
+
 # archive files
 *.tar.gz
 *.zip

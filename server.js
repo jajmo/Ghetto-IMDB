@@ -1,12 +1,12 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var movieData = require('./movies.js');
-var userData = require('./users.js');
-var bcrypt = require('bcrypt-nodejs');
-var cookieParser = require('cookie-parser');
-var config = require('./config.js');
+var express       = require('express');
+var bodyParser    = require('body-parser');
+var movieData     = require('./movies.js');
+var userData      = require('./users.js');
+var bcrypt        = require('bcrypt-nodejs');
+var cookieParser  = require('cookie-parser');
+var config        = require('./config.js');
 
-var app = express();
+var app           = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -72,18 +72,22 @@ app.get('/', function (request, response) {
 });
 
 /** Movie routes **/
-app.get("/movie/:id", function (request, response) {
+app.get('/movie/:id', function (request, response) {
     movieData.getMovie(request.params.id).then(function (movie) {
         if (!movie) {
-            response.redirect("/");
+            response.redirect('/');
         } else {
-            response.render("pages/movie", { user: response.locals.user, movie: movie, pageTitle: movie.title });
+            response.render('pages/movie', {
+                user: response.locals.user,
+                movie: movie,
+                pageTitle: movie.title
+            });
         }
-    })
+    });
 });
 
-app.get("/submit", function (request, response) {
-    response.render("pages/submitMovie", { user: response.locals.user });
+app.get('/submit', function (request, response) {
+    response.render('pages/submitMovie', { user: response.locals.user });
 });
 
 app.post('/search', function (request, response) {
@@ -146,13 +150,13 @@ app.post('/search', function (request, response) {
     });
 });
 
-app.post("/api/movies/submit", function (request, response) {
+app.post('/api/movies/submit', function (request, response) {
     movieData.addMovie(request.body.title, request.body.year).then(function (res) {
-        response.redirect("/movie/" + res._id);
+        response.redirect('/movie/' + res._id);
     });
 });
 
-app.post("/api/movies/:id/vote", function (request, response) {
+app.post('/api/movies/:id/vote', function (request, response) {
     var rating = parseInt(request.body.rating);
     var id = request.params.id;
 
@@ -241,7 +245,7 @@ app.get('/profile', function (request, response) {
 app.get('/profile/:username', function (request, response) {
     userData.getUserByUsername(request.params.username).then(function (profile) {
         if (!profile) {
-            response.redirect("/profile");
+            response.redirect('/profile');
         } else {
             userData.getAllMovies(profile._id)
             .then(movieData.getMoviesByIDs)

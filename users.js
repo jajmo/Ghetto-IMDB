@@ -1,10 +1,10 @@
-var MongoClient = require('mongodb').MongoClient
-    , settings = require('./config.js')
-    , uuid = require('node-uuid')
-    , movies = require('./movies.js');
+var MongoClient   = require('mongodb').MongoClient
+    , settings      = require('./config.js')
+    , uuid          = require('node-uuid')
+    , movies        = require('./movies.js');
 
-var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
-var exports = module.exports = {};
+var fullMongoUrl  = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
+var exports       = module.exports = {};
 
 MongoClient.connect(fullMongoUrl)
 .then(function(db) {
@@ -13,8 +13,8 @@ MongoClient.connect(fullMongoUrl)
 
     // Update a user's profile
     exports.updateProfile = function (uid, profileText, realName, password) {
-        var updateSet = { 
-            profileText: profileText.trim(), 
+        var updateSet = {
+            profileText: profileText.trim(),
             realName: realName
         };
 
@@ -27,16 +27,18 @@ MongoClient.connect(fullMongoUrl)
 
     // Check if a user is logged in
     exports.isLoggedIn = function (cookieValue, response) {
-        return userCollection.findOne({ currentSessionId: cookieValue }).then(function (doc) {
-            if (doc === null && cookieValue !== undefined) {
-                var anHourAgo = new Date();
-                anHourAgo.setHours(anHourAgo.getHours() - 1);
-                response.cookie(settings.cookieName, '', { expires: anHourAgo });
-                response.clearCookie(settings.cookieName);
-            }
+        return userCollection
+            .findOne({ currentSessionId: cookieValue })
+            .then(function (doc) {
+                if (doc === null && cookieValue !== undefined) {
+                    var anHourAgo = new Date();
+                    anHourAgo.setHours(anHourAgo.getHours() - 1);
+                    response.cookie(settings.cookieName, '', { expires: anHourAgo });
+                    response.clearCookie(settings.cookieName);
+                }
 
-            return doc;
-        });
+                return doc;
+            });
     };
 
     // Log a user in
@@ -45,17 +47,22 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject();
         }
 
-        return userCollection.findOne({ username: username }).then(function (user) {
-            if (user == null) {
-                return Promise.reject();
-            }
+        return userCollection
+            .findOne({ username: username })
+            .then(function (user) {
+                if (user == null) {
+                    return Promise.reject();
+                }
 
-            var sessID = uuid.v4();
-            return userCollection.updateOne({ username: username }, { $set: { currentSessionId: sessID }}).then(function (res) {
-                response.cookie(settings.serverConfig.cookieName, sessID);
-                return '1';
+                var sessID = uuid.v4();
+                return userCollection.updateOne(
+                        { username: username },
+                        { $set: { currentSessionId: sessID }}
+                    ).then(function (res) {
+                        response.cookie(settings.serverConfig.cookieName, sessID);
+                        return '1';
+                    });
             });
-        });
     };
 
     // Get a user's password hash for client-side comparison
@@ -65,9 +72,11 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject();
         }
 
-        return userCollection.findOne({ username: username }).then(function (user) {
-            return user.encryptedPassword;
-        });
+        return userCollection
+            .findOne({ username: username })
+            .then(function (user) {
+                return user.encryptedPassword;
+            });
     };
 
     // Log a user out

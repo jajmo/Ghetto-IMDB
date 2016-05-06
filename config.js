@@ -2,7 +2,7 @@ var exports = module.exports = {};
 
 exports.mongoConfig = {
     serverUrl: 'mongodb://localhost:27017/',
-    database: 'ghetto_imdb'        
+    database: 'ghetto_imdb'
 };
 
 exports.serverConfig = {
@@ -12,5 +12,5 @@ exports.serverConfig = {
         watched: 2,
         willNotWatch: 3
     },
-    cookieName: "sessID"
+    cookieName: 'sessID'
 };

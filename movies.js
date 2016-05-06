@@ -1,10 +1,10 @@
-var MongoClient = require('mongodb').MongoClient
-    , settings = require('./config.js')
-    , uuid = require('node-uuid')
-    , request = require('request');
+var MongoClient   = require('mongodb').MongoClient
+    , settings      = require('./config.js')
+    , uuid          = require('node-uuid')
+    , request       = require('request');
 
-var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
-var exports = module.exports = {};
+var fullMongoUrl  = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
+var exports       = module.exports = {};
 
 MongoClient.connect(fullMongoUrl)
 .then(function(db) {

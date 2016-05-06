@@ -239,6 +239,23 @@ app.get('/profile', function (request, response) {
         });
 });
 
+app.get('/profile/:username', function (request, response) {
+    userData.getUserByUsername(request.params.username).then(function (profile) {
+        if (!profile) {
+            response.redirect("/profile");
+        } else {
+            userData.getAllMovies(profile._id)
+            .then(movieData.getMoviesByIDs)
+            .then(function (moviesList) {
+                response.render(
+                    'pages/profile',
+                    { user: profile, movies: moviesList }
+                );
+            });
+        }
+    });
+});
+
 app.get('/settings', function (request, response) {
     response.render('pages/settings', { user: response.locals.user });
 });

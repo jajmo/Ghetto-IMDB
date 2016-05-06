@@ -153,4 +153,8 @@ MongoClient.connect(fullMongoUrl)
                 });
         });
     };
+
+    exports.getUserByUsername = function (username) {
+        return userCollection.findOne({ username: username });
+    };
 });

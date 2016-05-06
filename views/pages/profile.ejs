@@ -25,7 +25,12 @@
         </div>
         <div class="row">
             <div class="col-md-5 col-md-offset-7">
-                <h4>Ex-Machina</h4>
+                <h4><%= user.featuredMovie.title %></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-7">
+                <img src="<%= user.featuredMovie.cover %>" alt="<%= user.featuredMovie.title %> Cover">
             </div>
         </div>
     </div>

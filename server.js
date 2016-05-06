@@ -263,6 +263,26 @@ app.get('/settings', function (request, response) {
     response.render('pages/settings', { user: response.locals.user });
 });
 
+app.get('/movies/my', function (request, response) {
+    userData
+        .getAllMovies(response.locals.user._id)
+        .then(movieData.getMoviesByIDs)
+        .then(function (moviesList) {
+            response.render(
+                'pages/myMovies',
+                { user: response.locals.user, movies: moviesList }
+            );
+        });
+});
+
+app.post('/api/user/removeMovie', function (request, response) {
+    var movieID = request.body.id;
+
+    userData.removeMovie(movieID, response.locals.user._id).then(function (res) {
+        response.json({ success: true });
+    });
+});
+
 app.post('/api/user/update', function (request, response) {
     var uid = response.locals.user._id;
     var profile = request.body.profileText;
@@ -289,6 +309,26 @@ app.post('/api/user/update', function (request, response) {
                 response.redirect('/profile');
             }
         });
+});
+
+app.post('/movies/my/feature/:id', function (request, response) {
+	var mid = request.params.id;
+    var uid = response.locals.user._id;
+	if(!mid || !uid) {
+	    console.log('Something went wrong');
+        response.json({ err: 'Invalid parameters' });
+	} else {
+		userData.setFeaturedMovie(uid, mid).then(function (res) {
+			if (res === true) {
+                response.json();
+            } else {
+                response.json({ err: res });
+            }
+        }).catch(function (err) {
+            console.log(err);
+            response.json({ err: err });
+        });
+	}
 });
 
 app.post('/api/user/watchMovie/:id', function (request, response) {

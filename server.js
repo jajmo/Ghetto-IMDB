@@ -312,14 +312,14 @@ app.post('/api/user/update', function (request, response) {
 });
 
 app.post('/movies/my/feature/:id', function (request, response) {
-	var mid = request.params.id;
+    var mid = request.params.id;
     var uid = response.locals.user._id;
-	if(!mid || !uid) {
-	    console.log('Something went wrong');
+    if(!mid || !uid) {
+        console.log('Something went wrong');
         response.json({ err: 'Invalid parameters' });
-	} else {
-		userData.setFeaturedMovie(uid, mid).then(function (res) {
-			if (res === true) {
+    } else {
+        userData.setFeaturedMovie(uid, mid).then(function (res) {
+            if (res === true) {
                 response.json();
             } else {
                 response.json({ err: res });
@@ -328,7 +328,7 @@ app.post('/movies/my/feature/:id', function (request, response) {
             console.log(err);
             response.json({ err: err });
         });
-	}
+    }
 });
 
 app.post('/api/user/watchMovie/:id', function (request, response) {

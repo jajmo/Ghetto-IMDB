@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient
     , settings = require('./config.js')
     , uuid = require('node-uuid')
-    , movies = require('./data.js');
+    , movies = require('./movies.js');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};

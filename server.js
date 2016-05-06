@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var movieData = require('./data.js');
+var movieData = require('./movies.js');
 var userData = require('./users.js');
 var bcrypt = require('bcrypt-nodejs');
 var cookieParser = require('cookie-parser');
@@ -71,6 +71,7 @@ app.get('/', function (request, response) {
     });
 });
 
+/** Movie routes **/
 app.get("/movie/:id", function (request, response) {
     movieData.getMovie(request.params.id).then(function (movie) {
         if (!movie) {
@@ -153,7 +154,7 @@ app.post("/api/movies/submit", function (request, response) {
     });
 });
 
-/** User management routes **/
+/** User routes **/
 app.post('/login', function (request, response) {
     if (response.locals.user !== null) {
         response.redirect('/');
@@ -282,6 +283,7 @@ app.post('/api/user/watchMovie/:id', function (request, response) {
     }
 });
 
+// Fallback for invalid routes
 app.get('*', function (request, response) {
     response.redirect('/');
 });

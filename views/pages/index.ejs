@@ -2,17 +2,14 @@
 <html lang="en">
 
 <head>
-    <% if (typeof pageTitle == 'undefined') { %>
-        <% var pageTitle = ''; %>
-    <% } %>
     <% include ../partials/head %>
     <link type="text/css" rel="stylesheet" href="/assets/css/index.css" />
     <link type="text/css" rel="stylesheet" href="/assets/css/form.css" />
 </head>
 
 <body class="container-fluid">
-    <h1><%= pageHeader %></h1>
     <%- include('../partials/nav', { user: user }); %>
+    <h2><%= pageHeader %></h2>
     <section class="container-fluid">
         <form class="input-group" method="post" action="/search">
             <input type="text" name="search" id="search" class="form-control" placeholder="Search..." />

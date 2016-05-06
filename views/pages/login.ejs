@@ -6,17 +6,11 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <header>
-            <h1><%= title %></h1>
+            <h1>Ghetto IMDB</h1>
         </header>
         <main class="row">
-            <% if (typeof error === "string") { %>
-                <div class="alert alert-danger" id="error-message"><%= error %></div>
-            <% } %>
-            <% if (typeof info === "string") { %>
-                <div class="alert alert-info" id="info-message"><%= info %></div>
-            <% } %>
             <section class="col-sm-6 m-x-2">
                 <h2>Login</h2>
                 <form action="/login" method="POST" class="form-horizontal">

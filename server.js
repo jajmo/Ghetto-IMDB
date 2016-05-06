@@ -145,9 +145,15 @@ app.post('/search', function (request, response) {
     });
 });
 
-app.post('/api/movies/submit', function (request, response) {
-    movieData.addMovie(request.body.title, request.body.year);
-    response.redirect('/');
+app.post("/api/movies/submit", function (request, response) {
+    movieData.addMovie(request.body.title, request.body.year).then(function (res) {
+        console.log(res);
+        if (res) {
+            response.redirect("/movie/" + res._id);
+        } else {
+            response.redirect("/");
+        }
+    });
 });
 
 /** User management routes **/

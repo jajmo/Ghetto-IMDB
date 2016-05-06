@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var movieData = require('./data.js');
+var movieData = require('./movies.js');
 var userData = require('./users.js');
 var bcrypt = require('bcrypt-nodejs');
 var cookieParser = require('cookie-parser');
@@ -71,6 +71,7 @@ app.get('/', function (request, response) {
     });
 });
 
+/** Movie routes **/
 app.get("/movie/:id", function (request, response) {
     movieData.getMovie(request.params.id).then(function (movie) {
         if (!movie) {
@@ -148,12 +149,21 @@ app.post('/search', function (request, response) {
 app.post("/api/movies/submit", function (request, response) {
     movieData.addMovie(request.body.title, request.body.year).then(function (res) {
         response.redirect("/movie/" + res._id);
-    }).catch(function (err) {
-        response.redirect("/");
     });
 });
 
-/** User management routes **/
+app.post("/api/movies/:id/vote", function (request, response) {
+    var rating = parseInt(request.body.rating);
+    var id = request.params.id;
+
+    movieData.voteOnMovie(id, rating, response.locals.user._id).then(function (res) {
+        response.json({ success: true });
+    }).catch(function (err) {
+        response.json({ success: false });
+    });
+});
+
+/** User routes **/
 app.post('/login', function (request, response) {
     if (response.locals.user !== null) {
         response.redirect('/');
@@ -228,6 +238,23 @@ app.get('/profile', function (request, response) {
         });
 });
 
+app.get('/profile/:username', function (request, response) {
+    userData.getUserByUsername(request.params.username).then(function (profile) {
+        if (!profile) {
+            response.redirect("/profile");
+        } else {
+            userData.getAllMovies(profile._id)
+            .then(movieData.getMoviesByIDs)
+            .then(function (moviesList) {
+                response.render(
+                    'pages/profile',
+                    { user: profile, movies: moviesList }
+                );
+            });
+        }
+    });
+});
+
 app.get('/settings', function (request, response) {
     response.render('pages/settings', { user: response.locals.user });
 });
@@ -282,6 +309,7 @@ app.post('/api/user/watchMovie/:id', function (request, response) {
     }
 });
 
+// Fallback for invalid routes
 app.get('*', function (request, response) {
     response.redirect('/');
 });

@@ -24,13 +24,57 @@
         $.ajax(request).then(function (response) {
             if (!response.err) {
                 $('#watched-buttons-' + id).collapse('hide');
-                $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
-                $('#save-button-div-' + id).collapse('show');
+
+                if (state == 2) {
+                    $("#movie-panel-" + id).unbind('mouseleave mouseenter');
+                    $('#rate-' + id).collapse('show');
+                } else {
+                    $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
+                    $('#save-button-div-' + id).collapse('show');
+                }
             } else {
                 console.log(response.err);
             }
         });
     });
+
+    $('.save-rating-btn').click(function (e) {
+        var id = $(this).attr('data-id');
+        var rating = parseInt($('#rating-' + id).val());
+
+        if (rating) {
+            var request = {
+                url: "/api/movies/" + id + "/vote",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    rating: rating
+                })
+            };
+
+            $.ajax(request).then(function (response) {
+                resetButtons(id);
+            });
+        }
+    });
+
+    $('.cancel-rating-btn').click(function (e) {
+        var id = $(this).attr('data-id');
+        resetButtons(id);
+    });
+
+    function resetButtons (id) {
+        // Reset buttons and re-attach event handler
+        $('#rate-' + id).collapse('hide');
+        $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
+        $('#save-button-div-' + id).collapse('show');
+        $("#movie-panel-" + id).bind('mouseenter', function () {
+            $(this).find('.movie-panel-overlay').finish();
+            $(this).find('.movie-panel-overlay').fadeIn(150);
+        }).bind('mouseleave', function () {
+            $(this).find('.movie-panel-overlay').fadeOut(150);
+        });
+    };
 
     $('h2').on('click', '.btn-collapse', function (e) {
         if (this.dataset.expanded === 'true') {

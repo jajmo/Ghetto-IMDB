@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient
     , settings = require('./config.js')
     , uuid = require('node-uuid')
-    , movies = require('./data.js');
+    , movies = require('./movies.js');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
@@ -51,9 +51,10 @@ MongoClient.connect(fullMongoUrl)
             }
 
             var sessID = uuid.v4();
-            userCollection.updateOne({ username: username }, { $set: { currentSessionId: sessID }});
-            response.cookie(settings.serverConfig.cookieName, sessID);
-            return '1';
+            return userCollection.updateOne({ username: username }, { $set: { currentSessionId: sessID }}).then(function (res) {
+                response.cookie(settings.serverConfig.cookieName, sessID);
+                return '1';
+            });
         });
     };
 
@@ -125,9 +126,11 @@ MongoClient.connect(fullMongoUrl)
             .then(function (result) {
                 var ids = [];
 
-                result.movies.forEach(function (movie) {
-                    ids.push(movie.id);
-                });
+                if (result) {
+                    result.movies.forEach(function (movie) {
+                        ids.push(movie.id);
+                    });
+                }
 
                 return ids;
             });
@@ -150,5 +153,9 @@ MongoClient.connect(fullMongoUrl)
                     return 1;
                 });
         });
+    };
+
+    exports.getUserByUsername = function (username) {
+        return userCollection.findOne({ username: username });
     };
 });

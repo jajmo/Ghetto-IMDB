@@ -9,7 +9,7 @@
 
 <body class="container-fluid">
     <%- include('../partials/nav', { user: user }); %>
-    <h2>Browse Movies</h2>
+    <h2><%= pageHeader %></h2>
     <section class="container-fluid">
         <form class="input-group" method="post" action="/search">
             <input type="text" name="search" id="search" class="form-control" placeholder="Search..." />

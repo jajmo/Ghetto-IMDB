@@ -38,12 +38,12 @@
         });
     });
 
-    $('div').on('submit', '.rate-form', function (e) {
-        e.preventDefault();
-        console.log("submitted");
+    $('div').on('click', '.save-rating-btn', function (e) {
+        $(this).off('click');
         var id = $(this).attr('data-id');
         var rating = parseInt($('#rating-' + id).val());
         console.log(rating);
+        return;
 
         var request = {
             url: "/api/movies/" + id + "/vote",

@@ -25,7 +25,7 @@
                         >Will not watch</button>
                     </div>
                     <div class="col-md-12 collapse" id="rate-<%= movie._id %>" data-toggle="collapse">
-                        <form class="rate-form" data-id="<%= movie._id %>" action="#" method="POST">
+                        <form>
                             <div class="row">
                                 <label for="rating" class="form-control-label col-md-12">Rating</label>
                             </div>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" data-id="<%= movie._id %>" class="btn btn-success save-rating-btn">Save</button>
                                 </div>
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-warning">Cancel</button>

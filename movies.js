@@ -162,7 +162,7 @@ MongoClient.connect(fullMongoUrl)
                                 movieCollection.insertOne(doc);
                                 resolve(doc);
                             } else {
-                                reject("Movie already exists");
+                                resolve(res);
                             }
                         });
                     } else {

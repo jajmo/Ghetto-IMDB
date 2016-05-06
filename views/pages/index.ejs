@@ -22,7 +22,6 @@
             </span>
         </form>
     </section>
-<h3><%= movies %></h3>
 <% for (var genre in movies) { %>
     <%- include('../partials/genre-carousel', { user: user, genre: genre, movies: movies[genre], watchOptions: watchOptions }); %>
 <% } %>

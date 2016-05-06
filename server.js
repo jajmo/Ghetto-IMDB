@@ -275,7 +275,13 @@ app.get('/movies/my', function (request, response) {
         });
 });
 
+app.post('/api/user/removeMovie', function (request, response) {
+    var movieID = request.body.id;
 
+    userData.removeMovie(movieID, response.locals.user._id).then(function (res) {
+        response.json({ success: true });
+    });
+});
 
 app.post('/api/user/update', function (request, response) {
     var uid = response.locals.user._id;

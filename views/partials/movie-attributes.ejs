@@ -1,4 +1,4 @@
-<div class="row updateAttributes">
+<div class="row updateAttributes collapse in movie-<%= movie._id %>">
     <div class="col-md-12 single-movie" data-id="<%= movie._id %>">
 		<div class="row title-row">
 			<div class="col-md-6 movie-attr name-rating">
@@ -9,7 +9,7 @@
 					<input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm" value="Make Featured Movie" />
 				</form>
 				<form class="delete" data-id="<%= movie._id %>" role="form">
-					<input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm" value="Remove from My Movies" />
+					<input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm delete-btn" value="Remove from My Movies" />
 				</form>
 			</div>
 		</div>

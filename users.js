@@ -187,4 +187,14 @@ MongoClient.connect(fullMongoUrl)
 
 		});
 	};
+
+    exports.removeMovie = function (mid, uid) {
+        if (!mid || !uid) {
+            return;
+        }
+
+        return userCollection.update({ _id: uid }, { $pull: { movies: { id: mid }}}).then(function (res) {
+            return movies.pullVote(mid, uid);
+        });
+    };
 });

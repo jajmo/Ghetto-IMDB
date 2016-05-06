@@ -1,7 +1,5 @@
 (function ($) {
 
-    // TODO: We're going to need data-* attributes to prevent expanding/collapsing/etc all of
-    // the buttons at once
     $('div').on('click', '.save-button', function (e) {
         var id = $(this).attr('data-id');
 
@@ -9,6 +7,30 @@
         id = id.substring(0, id.indexOf('_'));
         $('[id^=save-button-div-' + id + ']').collapse('hide');
         $('[id^=watched-buttons-' + id + ']').collapse('show');
+    });
+
+    $('.delete-btn').click(function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+
+        if (!id) {
+            return;
+        }
+
+        var req = {
+            url: "/api/user/removeMovie",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                id: id
+            })
+        };
+
+        $.ajax(req).then(function (res) {
+            if (res.success === true) {
+                $('.movie-' + id).collapse('hide');
+            }
+        });
     });
 
     $('div').on('click', '.watched-btn', function (e) {
@@ -61,8 +83,6 @@
             } 
 		});
 	});
-	
-	
 
     $('.save-rating-btn').click(function (e) {
         var id = $(this).attr('data-id');

@@ -25,6 +25,10 @@
     overflow: hidden;
 }
 
+.carousel-inner {
+    overflow: visible;
+}
+
 .carousel-control {
     padding-top: 10%;
     width: 5%;
@@ -32,7 +36,9 @@
 
 .carousel-inner .item .row {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    max-height: 370px;
+    margin-left: -5px;
 }
 
 .genre-carousel .expand-button {
@@ -52,6 +58,19 @@ html {
 
 .movie-panel {
     position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.movie-panel img {
+    object-fit: cover;
+    height: auto;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.19),
+                -5px 0 10px rgba(0, 0, 0, 0.19),
+                0 5px 10px rgba(0, 0, 0, 0.19);
+    width: 100%;
+    padding: 0;
 }
 
 .movie-panel-overlay {
@@ -62,7 +81,8 @@ html {
     right: 0;
     bottom: 0;
     top: 0;
-    margin: 0 15px;
+    padding: 0;
+    margin: 10px 0;
 }
 
 .movie-panel-overlay h3 {

@@ -1,0 +1,43 @@
+body {
+    background-color: #34495e;
+}
+
+html {
+    padding: 0 10px;
+}
+
+p, h1, h2, h3, h4 {
+    color: #ecf0f1;
+}
+
+.ghetto-alert-container {
+    position: fixed;
+    width: calc(100% - 50px);
+    top: 0;
+    height: 100px;
+}
+
+.ghetto-alert {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+    z-index: 100;
+}
+
+.ghetto-alert span {
+    vertical-align: middle;
+    line-height: 1.5;
+    margin-left: 10px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 20px;
+}

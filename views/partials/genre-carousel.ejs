@@ -1,26 +1,29 @@
 <section class="genre-carousel">
     <h2>
-        <%= genre.genre %>
+        <%= genre %>
+        <% genre = (genre === "Saved Movies") ? "saved-movies" : genre %>
         <button
             data-toggle="collapse"
             data-expanded="true"
-            data-target="#movie-carousel-<%= genre.genre %>"
+            data-target="#movie-carousel-<%= genre %>"
             class="expand-button btn-collapse"
         ><span class="caret"></span></button>
     </h2>
 
     <div
         class="carousel slide collapse in"
-        id="movie-carousel-<%= genre.genre %>"
+        id="movie-carousel-<%= genre %>"
         data-toggle="collapse"
         data-interval="false"
         data-ride="carousel"
+        data-target="see-issue-34"
     >
         <div class="carousel-inner" role="listbox">
 
-<%    var movieArrClone = genre.movies.slice();
-            var groups = [];
+<%    var movieArrClone = movies.slice();
+            var groups  = [];
             var isFirst = true;
+            var watchOptions  = (watchOptions) ? watchOptions : undefined;
 
             while (movieArrClone.length > 0)  {
                 groups.push(movieArrClone.splice(0, 6));
@@ -31,7 +34,7 @@
                     <div class="row">
 
 <%          group.forEach(function (movie) { %>
-<%-           include('../partials/movie-panel', { user: user, movie: movie }); %>
+<%-           include('../partials/movie-panel', { user: user, movie: movie, genre: genre, watchOptions: watchOptions }); %>
 <%          }); %>
 
                     </div>
@@ -41,7 +44,7 @@
             }); %>
 
         </div>
-        <a class="left carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="prev">‹</a>
-        <a class="right carousel-control" href="#movie-carousel-<%= genre.genre %>" data-slide="next">›</a>
+        <a class="left carousel-control" href="#movie-carousel-<%= genre %>" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#movie-carousel-<%= genre %>" data-slide="next">›</a>
     </div>
 </section>

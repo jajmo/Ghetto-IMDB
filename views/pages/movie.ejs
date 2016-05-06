@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+    <link type="text/css" rel="stylesheet" href="/assets/css/movie.css" />
+</head>
+
+<body class="container-fluid">
+    <%- include('../partials/nav', { user: user }); %>
+    <%
+        var rating = 0;
+        var count = 0;
+        movie.userVotes.forEach(function (user) {
+            rating += user.rating;
+            count++;
+        });
+    %>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h2><%= movie.title %></h2>
+            <img src="<%= movie.image %>" alt="<%= movie.title %> Cover">
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <h3>Synopsis</h3>
+                <p><%= movie.description %></p>
+                <h3>Genre</h3>
+                <p><%= movie.genre.join(', ') %></p>
+                <h3>Actors</h3>
+                <p><%= movie.actors %></p>
+                <h3>Director</h3>
+                <p><%= movie.director %></p>
+                <h3>Critic Rating</h3>
+                <p><%= movie.criticRating %>/10</p>
+                <h3>User Rating</h3>
+                <p><%= (count === 0) ? '-' : Math.round((rating / count) * 10) / 10 %>/10</p>
+            </div>
+        </div>
+    </div>
+<% include ../partials/scripts %>
+</body>
+
+</html>

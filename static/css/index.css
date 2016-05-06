@@ -50,12 +50,6 @@
     outline: none;
 }
 
-html {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-
 .movie-panel {
     position: relative;
     height: 100%;
@@ -87,8 +81,15 @@ html {
 
 .movie-panel-overlay h3 {
     margin: 15px 15px;
-    color: #fff;
     font-size: 28px;
+}
+
+.movie-panel-overlay a {
+    color: #ecf0f1;
+}
+
+.movie-panel-overlay a:hover {
+    text-decoration: underline;
 }
 
 /* dirty, but w/e. selects the button container divs */
@@ -102,22 +103,6 @@ html {
     bottom: 0;
 }
 
-body {
-    background-color: #34495e;
-}
-
 h1, h2, h3, h4, h5, h6 {
     color: #ecf0f1;
-}
-
-h1 {
-    font-size: 40px;
-}
-
-h2 {
-    font-size: 30px;
-}
-
-h3 {
-    font-size: 20px;
 }

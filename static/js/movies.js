@@ -6,7 +6,6 @@
         var id = $(this).attr('data-id');
         $('#save-button-div-' + id).collapse('hide');
         $('#watched-buttons-' + id).collapse('show');
-        return;
     });
 
     $('div').on('click', '.watched-btn', function (e) {

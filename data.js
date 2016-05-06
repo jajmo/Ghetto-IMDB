@@ -29,10 +29,6 @@ MongoClient.connect(fullMongoUrl)
             .limit(1)
             .toArray()
             .then(function(listOfMovies) {
-                if (listOfMovies.length === 0) {
-                    throw new ReferenceError('Could not find movie with id of ' + id);
-                }
-
                 return listOfMovies[0];
             });
     };
@@ -140,34 +136,39 @@ MongoClient.connect(fullMongoUrl)
     };
 
     exports.addMovie = function (title, year) {
-        movieCollection
-            .findOne({ title: title })
-            .then(function (res) {
-                if (!res) {
-                    // Let's get some API in here
-                    request(
-                        encodeURI('http://omdbapi.com?t=' + title + '&y=' + year),
-                        function (error, response, body) {
-                            var movie = JSON.parse(body);
-                            if (!movie.error) {
-                                var doc = {
-                                    _id: uuid.v4(),
-                                    title: movie.Title,
-                                    description: movie.Plot,
-                                    genre: movie.Genre.split(', '),
-                                    image: movie.Poster,
-                                    actors: movie.Actors,
-                                    director: movie.Director,
-                                    userRating: 0,
-                                    criticRating: movie.imdbRating
-                                };
+        // Let's get some API in here
+        return new Promise(function (resolve, reject) {
+            request(
+                encodeURI('http://omdbapi.com?t=' + title + '&y=' + year),
+                function (error, response, body) {
+                    var movie = JSON.parse(body);
+                    if (!movie.Error) {
+                        var doc = {
+                            _id: uuid.v4(),
+                            title: movie.Title,
+                            description: movie.Plot,
+                            genre: movie.Genre.split(', '),
+                            image: movie.Poster,
+                            actors: movie.Actors,
+                            director: movie.Director,
+                            userRating: 0,
+                            criticRating: movie.imdbRating
+                        };
 
+                        movieCollection.findOne({ title: movie.Title }).then(function (res) {
+                            if (!res) {
                                 movieCollection.insertOne(doc);
+                                resolve(doc);
+                            } else {
+                                reject("Movie already exists");
                             }
-                        }
-                    );
+                        });
+                    } else {
+                        reject("Invalid movie");
+                    }
                 }
-            });
+            );
+        });
     };
 });
 

@@ -39,7 +39,9 @@ MongoClient.connect(fullMongoUrl)
 
     //get a list of movies by a list of ids
     exports.getMoviesByIDs = function (ids) {
-        return movieCollection.find({ _id: { $in: ids }}).toArray();
+        return movieCollection
+            .find({ _id: { $in: ids }})
+            .toArray();
     };
 
     //get a list of movies by a title
@@ -48,7 +50,9 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject('You must provide a title');
         }
 
-        return movieCollection.find({ title: { $regex: '.*' + title + '.*', $options: 'i' } }).toArray();
+        return movieCollection
+            .find({ title: { $regex: '.*' + title + '.*', $options: 'i' } })
+            .toArray();
     };
 
     //get a list of movies by a genre
@@ -57,7 +61,9 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject('You must provide a genre');
         }
 
-        return movieCollection.find({ genre: { $regex: '.*' + genre + '.*', $options: 'i' } }).toArray();
+        return movieCollection
+            .find({ genre: { $regex: '.*' + genre + '.*', $options: 'i' } })
+            .toArray();
     };
 
     //get a list of movies by an actor
@@ -66,7 +72,9 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject('You must provide a actor');
         }
 
-        return movieCollection.find({ actors: { $regex: '.*' + actor + '.*', $options: 'i' } }).toArray();
+        return movieCollection
+            .find({ actors: { $regex: '.*' + actor + '.*', $options: 'i' } })
+            .toArray();
     };
 
     //get a list of movies by director
@@ -75,7 +83,9 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject('You must provide a director');
         }
 
-        return movieCollection.find({ director: { $regex: '.*' + director + '.*', $options: 'i' } }).toArray();
+        return movieCollection
+            .find({ director: { $regex: '.*' + director + '.*', $options: 'i' } })
+            .toArray();
     };
 
 
@@ -122,35 +132,42 @@ MongoClient.connect(fullMongoUrl)
     };
 
     exports.movieExists = function (id) {
-        return movieCollection.findOne({ _id: id }).then(function (movie) {
-            return movie !== undefined;
-        });
+        return movieCollection
+            .findOne({ _id: id })
+            .then(function (movie) {
+                return movie !== undefined;
+            });
     };
 
     exports.addMovie = function (title, year) {
-        movieCollection.findOne({ title: title }).then(function (res) {
-            if (!res) {
-                // Let's get some API in here
-                request(encodeURI("http://omdbapi.com?t=" + title + "&y=" + year), function (error, response, body) {
-                    var movie = JSON.parse(body);
-                    if (!movie.error) {
-                        var doc = {
-                            _id: uuid.v4(),
-                            title: movie.Title,
-                            description: movie.Plot,
-                            genre: movie.Genre.split(", "),
-                            image: movie.Poster,
-                            actors: movie.Actors,
-                            director: movie.Director,
-                            userRating: 0,
-                            criticRating: movie.imdbRating
-                        };
+        movieCollection
+            .findOne({ title: title })
+            .then(function (res) {
+                if (!res) {
+                    // Let's get some API in here
+                    request(
+                        encodeURI('http://omdbapi.com?t=' + title + '&y=' + year),
+                        function (error, response, body) {
+                            var movie = JSON.parse(body);
+                            if (!movie.error) {
+                                var doc = {
+                                    _id: uuid.v4(),
+                                    title: movie.Title,
+                                    description: movie.Plot,
+                                    genre: movie.Genre.split(', '),
+                                    image: movie.Poster,
+                                    actors: movie.Actors,
+                                    director: movie.Director,
+                                    userRating: 0,
+                                    criticRating: movie.imdbRating
+                                };
 
-                        movieCollection.insertOne(doc);
-                    }
-                });
-            }
-        });
+                                movieCollection.insertOne(doc);
+                            }
+                        }
+                    );
+                }
+            });
     };
 });
 

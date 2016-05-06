@@ -2,28 +2,16 @@
 <html lang="en">
 
 <head>
-    <%- include('../partials/head', { pageTitle: user.username }); %>
-    <link type="text/css" ref="stylesheet" src="/assets/css/profile.css" />
-    <link type="text/css" rel="stylesheet" href="/assets/css/index.css" />
+    <%- include('../partials/head', { pageTitle: "My Movies" }); %>
+    <link type="text/css" rel="stylesheet" href="/assets/css/mymovies.css" />
 </head>
 
 <body class="container-fluid">
-    <h1><%= user.username %>'s Movies</h1>
     <% include ../partials/nav %>
-	<div class="row">
-		<div class="col-md-12">
-			<h2>Update Your Movies</h2>
-		</div>
-	</div>
-    <div class="row">
-        <div class="col-md-7">
-            <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
-            <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
-        </div>
-    </div>
+    <h2>My Movies</h2>
     <% movies.forEach(function(movie){ %>
-                    <% include ../partials/movieAttributes %>
-                <% }) %>
+        <% include ../partials/movie-attributes %>
+    <% }) %>
 
     <% include ../partials/scripts %>
 </body>

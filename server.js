@@ -154,6 +154,20 @@ app.post("/api/movies/submit", function (request, response) {
     });
 });
 
+app.post("/api/movies/:id/vote", function (request, response) {
+    console.log(request.body.rating);
+    var rating = parseInt(request.body.rating);
+    var id = request.params.id;
+
+    movieData.voteOnMovie(id, rating).then(function (response) {
+        console.log(response);
+        response.json({ success: true });
+    }).catch(function (err) {
+        console.log(err);
+        response.json({ success: false });
+    });
+});
+
 /** User routes **/
 app.post('/login', function (request, response) {
     if (response.locals.user !== null) {

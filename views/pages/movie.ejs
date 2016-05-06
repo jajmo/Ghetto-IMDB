@@ -30,8 +30,7 @@
                 <h3>Critic Rating</h3>
                 <p><%= movie.criticRating %>/10</p>
                 <h3>User Rating</h3>
-                <!-- TODO: Render this in stars or something idk -->
-                <p><%= movie.userRating %>/10</p>
+                <p><%= (movie.userVotes === 0) ? '-' : Math.round((movie.userTotalRating / movie.userVotes) * 10) / 10 %>/10</p>
             </div>
         </div>
     </div>

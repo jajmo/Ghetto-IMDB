@@ -1,5 +1,5 @@
 <div class="col-md-2">
-    <div class="movie-panel row">
+    <div class="movie-panel row" id="movie-panel-<%= movie._id %>">
         <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
         <div class="movie-panel-overlay">
             <h3><a href="/movie/<%= movie._id %>"><%= movie.title %></a></h3>
@@ -23,6 +23,30 @@
                             data-id="<%= movie._id %>"
                             data-state="<%= watchOptions.willNotWatch %>"
                         >Will not watch</button>
+                    </div>
+                    <div class="col-md-12 collapse" id="rate-<%= movie._id %>" data-toggle="collapse">
+                        <form class="rate-form" data-id="<%= movie._id %>" action="#" method="POST">
+                            <div class="row">
+                                <label for="rating" class="form-control-label col-md-12">Rating</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input type="text" size="1" name="rating" id="rating-<%= movie._id %>" class="form-control rating">
+                                </div>
+                                <!-- TODO: Fix space between input and span -->
+                                <div class="col-md-7">
+                                    <span style="color: #fff;">/10</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-warning">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 <% } %>
         </div>

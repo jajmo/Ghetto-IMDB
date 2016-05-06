@@ -151,7 +151,8 @@ MongoClient.connect(fullMongoUrl)
                             image: movie.Poster,
                             actors: movie.Actors,
                             director: movie.Director,
-                            userRating: 0,
+                            userTotalRating: 0,
+                            userVotes: 0,
                             criticRating: movie.imdbRating
                         };
 
@@ -168,6 +169,29 @@ MongoClient.connect(fullMongoUrl)
                     }
                 }
             );
+        });
+    };
+
+    exports.voteOnMovie = function (id, rating) {
+        if (!rating || rating > 10) {
+            return Promise.reject("Invalid rating: " + rating);
+        }
+
+        return movieCollection.findOne({ _id: id }).then(function (movie) {
+            if (!movie) {
+                return Promse.reject("Invalid movie ID");
+            } else {
+                movieCollection.update({ _id: movie._id }, 
+                    { 
+                      $set: {  
+                        userVotes: movie.userVotes + 1,
+                        userTotalRating: movie.userTotalRating + rating
+                      }
+                    }
+                ).then(function (res) {
+                    return "Good";
+                });
+            }
         });
     };
 });

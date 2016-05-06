@@ -24,11 +24,38 @@
         $.ajax(request).then(function (response) {
             if (!response.err) {
                 $('#watched-buttons-' + id).collapse('hide');
-                $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
-                $('#save-button-div-' + id).collapse('show');
+
+                if (state == 2) {
+                    $("#movie-panel-" + id).off('mouseleave');
+                    $('#rate-' + id).collapse('show');
+                } else {
+                    $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
+                    $('#save-button-div-' + id).collapse('show');
+                }
             } else {
                 console.log(response.err);
             }
+        });
+    });
+
+    $('div').on('submit', '.rate-form', function (e) {
+        e.preventDefault();
+        console.log("submitted");
+        var id = $(this).attr('data-id');
+        var rating = parseInt($('#rating-' + id).val());
+        console.log(rating);
+
+        var request = {
+            url: "/api/movies/" + id + "/vote",
+            method: "POST",
+            type: "application/json",
+            data: JSON.stringify({
+                rating: rating
+            })
+        };
+
+        $.ajax(request).then(function (response) {
+            console.log(response);
         });
     });
 

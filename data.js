@@ -76,39 +76,48 @@ MongoClient.connect(fullMongoUrl)
     };
 
     exports.movieExists = function (id) {
-        return movieCollection.findOne({ _id: id }).then(function (movie) {
-            return movie !== undefined;
-        });
+        return movieCollection
+            .findOne({ _id: id })
+            .then(function (movie) {
+                return movie !== undefined;
+            });
     };
 
     exports.addMovie = function (title, year) {
-        movieCollection.findOne({ title: title }).then(function (res) {
-            if (!res) {
-                // Let's get some API in here
-                request(encodeURI("http://omdbapi.com?t=" + title + "&y=" + year), function (error, response, body) {
-                    var movie = JSON.parse(body);
-                    if (!movie.error) {
-                        var doc = {
-                            _id: uuid.v4(),
-                            title: movie.Title,
-                            description: movie.Plot,
-                            genre: movie.Genre.split(", "),
-                            image: movie.Poster,
-                            actors: movie.Actors,
-                            director: movie.Director,
-                            userRating: 0,
-                            criticRating: movie.imdbRating
-                        };
+        movieCollection
+            .findOne({ title: title })
+            .then(function (res) {
+                if (!res) {
+                    // Let's get some API in here
+                    request(
+                        encodeURI('http://omdbapi.com?t=' + title + '&y=' + year),
+                        function (error, response, body) {
+                            var movie = JSON.parse(body);
+                            if (!movie.error) {
+                                var doc = {
+                                    _id: uuid.v4(),
+                                    title: movie.Title,
+                                    description: movie.Plot,
+                                    genre: movie.Genre.split(', '),
+                                    image: movie.Poster,
+                                    actors: movie.Actors,
+                                    director: movie.Director,
+                                    userRating: 0,
+                                    criticRating: movie.imdbRating
+                                };
 
-                        movieCollection.insertOne(doc);
-                    }
-                });
-            }
-        });
+                                movieCollection.insertOne(doc);
+                            }
+                        }
+                    );
+                }
+            });
     };
 
     exports.getMoviesByIDs = function (ids) {
-        return movieCollection.find({ _id: { $in: ids }}).toArray();
+        return movieCollection
+            .find({ _id: { $in: ids }})
+            .toArray();
     };
 });
 

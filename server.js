@@ -16,11 +16,20 @@ app.use('/assets', express.static('static'));
 
 // Routes that only authenticated users can view
 // Supports regex
-var restrictedRoutes = [ /\/profile*/, /\/settings*/, /\/movies\/my*/, /\/api\/user*/, /\/api\/movies*/, /\/submit*/ ];
+var restrictedRoutes = [
+    /\/profile*/,
+    /\/settings*/,
+    /\/movies\/my*/,
+    /\/api\/user*/,
+    /\/api\/movies*/,
+    /\/submit*/
+];
 
 app.use(function (request, response, next) {
-    var cookieVal = (request.cookies !== undefined) ? request.cookies[config.serverConfig.cookieName] : null;
-    url = request.url;
+    var cookieVal = (request.cookies !== undefined)
+                                    ? request.cookies[config.serverConfig.cookieName]
+                                    : null
+        , url = request.url;
 
     userData.isLoggedIn(cookieVal, response).then(function (res) {
         if (res !== null && cookieVal !== undefined) {
@@ -29,7 +38,7 @@ app.use(function (request, response, next) {
             response.locals.user = null;
             restrictedRoutes.forEach(function (route) {
                 if (route.test(url)) {
-                    response.redirect("/");
+                    response.redirect('/');
                 }
             });
         }
@@ -38,7 +47,7 @@ app.use(function (request, response, next) {
     });
 });
 
-app.get("/", function (request, response) {
+app.get('/', function (request, response) {
     movieData.getAllMovies().then(function (moviesList) {
         var movies = [];
 
@@ -52,7 +61,7 @@ app.get("/", function (request, response) {
             });
         });
 
-        response.render("pages/index", { 
+        response.render('pages/index', { 
             pageTitle: 'Browse', 
             movies: movies, 
             user: response.locals.user,
@@ -61,70 +70,88 @@ app.get("/", function (request, response) {
     });
 });
 
-app.get("/submit", function (request, response) {
-    response.render("pages/submitMovie", { user: response.locals.user });
+app.get('/submit', function (request, response) {
+    response.render('pages/submitMovie', { user: response.locals.user });
 });
 
-app.post("/api/movies/submit", function (request, response) {
+app.post('/api/movies/submit', function (request, response) {
     movieData.addMovie(request.body.title, request.body.year);
-    response.redirect("/");
+    response.redirect('/');
 });
 
 /** User management routes **/
-app.post("/login", function (request, response) {
+app.post('/login', function (request, response) {
     if (response.locals.user !== null) {
-        response.redirect("/");
+        response.redirect('/');
     }
 
     userData.getPassHash(request.body.username).then(function (passHash) {
-        userData.login(request.body.username, bcrypt.compareSync(request.body.password, passHash), response).then(function (valid) {
-            response.redirect("/");
+        userData.login(
+                request.body.username,
+                bcrypt.compareSync(request.body.password, passHash),
+                response
+        ).then(function (valid) {
+            response.redirect('/');
         }).catch(function (err) {
-            response.redirect("/login");
+            response.redirect('/login');
         });
     }).catch(function (err) {
-        response.redirect("/login");
+        response.redirect('/login');
     });
 });
 
-app.post("/register", function (request, response) {
+app.post('/register', function (request, response) {
     if (response.locals.user !== null) {
-        response.redirect("/");
+        response.redirect('/');
     }
 
-    if (request.body.username.trim() === "" || request.body.password.trim() === "" || request.body.realname.trim() === "") {
-        response.redirect("/");
-        return;
+    if (
+        request.body.username.trim() === '' ||
+        request.body.password.trim() === '' ||
+        request.body.realname.trim() === ''
+    ) {
+        return response.redirect('/');
     }
 
-    userData.createUser(request.body.username.trim(), bcrypt.hashSync(request.body.password.trim()), request.body.realname.trim()).then(function (data) {
-        response.redirect("/");
-    }).catch(function (err) {
-        response.redirect("/");
-    });
+    userData
+        .createUser(
+            request.body.username.trim(),
+            bcrypt.hashSync(request.body.password.trim()),
+            request.body.realname.trim()
+        ).then(function (data) {
+            response.redirect('/');
+        }).catch(function (err) {
+            response.redirect('/');
+        });
 });
 
-app.get("/logout", function (request, response) {
+app.get('/logout', function (request, response) {
     if (response.locals.user === null) {
-        response.redirect("/");
+        response.redirect('/');
     }
 
-    userData.logout(request.cookies[config.serverConfig.cookieName], response).then(function (res) {
-        response.locals.user = null;
-        response.redirect("/");
-    });
+    userData
+        .logout(request.cookies[config.serverConfig.cookieName], response)
+        .then(function (res) {
+            response.locals.user = null;
+            response.redirect('/');
+        });
 });
 
-app.get("/login", function (request, response) {
-    response.render("pages/login", { title: "Login" });
+app.get('/login', function (request, response) {
+    response.render('pages/login', { title: 'Login' });
 });
 
 app.get('/profile', function (request, response) {
-    userData.getAllMovies(response.locals.user._id).then(function (movies) {
-        movieData.getMoviesByIDs(movies).then(function (moviesList) {
-            response.render('pages/profile', { user: response.locals.user, movies: moviesList });
+    userData
+        .getAllMovies(response.locals.user._id)
+        .then(movieData.getMoviesByIDs)
+        .then(function (moviesList) {
+            response.render(
+                'pages/profile',
+                { user: response.locals.user, movies: moviesList }
+            );
         });
-    });
 });
 
 app.get('/settings', function (request, response) {
@@ -139,20 +166,24 @@ app.post('/api/user/update', function (request, response) {
     var passConfirm = request.body.passwordConfirm;
 
     if (!uid || !realname) {
-        console.log("Something went wrong");
-        response.redirect("/settings");
+        console.log('Something went wrong');
+        response.redirect('/settings');
         return;
     }
 
-    var newPass = (password && password == passConfirm) ? bcrypt.hashSync(password.trim()) : null;
+    var newPass = (password && password == passConfirm)
+                                ? bcrypt.hashSync(password.trim())
+                                : null;
 
-    userData.updateProfile(uid, profile, realname, newPass).then(function (res) {
-        if (newPass) {
-            response.redirect("/logout");
-        } else {
-            response.redirect("/profile");
-        }
-    });
+    userData
+        .updateProfile(uid, profile, realname, newPass)
+        .then(function (res) {
+            if (newPass) {
+                response.redirect('/logout');
+            } else {
+                response.redirect('/profile');
+            }
+        });
 });
 
 app.post('/api/user/watchMovie/:id', function (request, response) {
@@ -161,8 +192,8 @@ app.post('/api/user/watchMovie/:id', function (request, response) {
     var state = request.body.state;
 
     if (!id || !uid || !state) {
-        console.log("Something went wrong");
-        response.json({ err: "Invalid parameters" });
+        console.log('Something went wrong');
+        response.json({ err: 'Invalid parameters' });
     } else {
         userData.watchMovie(id, uid, state).then(function (res) {
             if (res === true) {
@@ -178,7 +209,7 @@ app.post('/api/user/watchMovie/:id', function (request, response) {
 });
 
 app.get('*', function (request, response) {
-    response.redirect("/");
+    response.redirect('/');
 });
 
 // We can now navigate to localhost:3000

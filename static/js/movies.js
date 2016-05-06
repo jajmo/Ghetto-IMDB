@@ -4,16 +4,21 @@
     // the buttons at once
     $('div').on('click', '.save-button', function (e) {
         var id = $(this).attr('data-id');
-        $('#save-button-div-' + id).collapse('hide');
-        $('#watched-buttons-' + id).collapse('show');
+
+        //trim genre off the end of id (it was there for uniqueness on the page)
+        id = id.substring(0, id.indexOf('_'));
+        $('[id^=save-button-div-' + id + ']').collapse('hide');
+        $('[id^=watched-buttons-' + id + ']').collapse('show');
     });
 
     $('div').on('click', '.watched-btn', function (e) {
         var id = $(this).attr('data-id');
         var state = $(this).attr('data-state');
 
+        //trim genre off the end of id (it was there for uniqueness on the page)
+        id = id.substring(0, id.indexOf('_'));
         var request = {
-            url: "/api/user/watchMovie/" + id.substring(0, id.indexOf('_')),
+            url: "/api/user/watchMovie/" + id,
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify({
@@ -23,14 +28,14 @@
 
         $.ajax(request).then(function (response) {
             if (!response.err) {
-                $('#watched-buttons-' + id).collapse('hide');
+                $('[id^=watched-buttons-' + id + ']').collapse('hide');
 
                 if (state == 2) {
-                    $("#movie-panel-" + id).unbind('mouseleave mouseenter');
-                    $('#rate-' + id).collapse('show');
+                    $('[id^=movie-panel-' + id + ']').unbind('mouseleave mouseenter');
+                    $('[id^=rate-' + id + ']').collapse('show');
                 } else {
-                    $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
-                    $('#save-button-div-' + id).collapse('show');
+                    $('.save-button[data-id^="' + id + '"]').attr('disabled', 'disabled');
+                    $('[id^=save-button-div-' + id + ']').collapse('show');
                 }
             } else {
                 console.log(response.err);
@@ -42,9 +47,11 @@
         var id = $(this).attr('data-id');
         var rating = parseInt($('#rating-' + id).val());
 
+        //trim genre off the end of id (it was there for uniqueness on the page)
+        id = id.substring(0, id.indexOf('_'));
         if (rating) {
             var request = {
-                url: "/api/movies/" + id.substring(0, id.indexOf('_')) + "/vote",
+                url: "/api/movies/" + id + "/vote",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -65,10 +72,10 @@
 
     function resetButtons (id) {
         // Reset buttons and re-attach event handler
-        $('#rate-' + id).collapse('hide');
-        $('.save-button[data-id="' + id + '"]').attr('disabled', 'disabled');
-        $('#save-button-div-' + id).collapse('show');
-        $("#movie-panel-" + id).bind('mouseenter', function () {
+        $('[id^=rate-' + id + ']').collapse('hide');
+        $('.save-button[data-id^="' + id + '"]').attr('disabled', 'disabled');
+        $('[id^=save-button-div-' + id + ']').collapse('show');
+        $('[id^=movie-panel-' + id + ']').bind('mouseenter', function () {
             $(this).find('.movie-panel-overlay').finish();
             $(this).find('.movie-panel-overlay').fadeIn(150);
         }).bind('mouseleave', function () {

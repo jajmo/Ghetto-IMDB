@@ -42,6 +42,27 @@
             }
         });
     });
+	
+	$('.featured .btn').click( function (e) {
+		e.preventDefault();
+		var mid = $(this).attr('data-id');
+		
+		 var request = {
+            url: "/movies/my/feature/" + mid,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+            })
+        };
+		
+        $.ajax(request).then(function (response) {
+			if(response.err) {
+                console.log(response.err);
+            } 
+		});
+	});
+	
+	
 
     $('.save-rating-btn').click(function (e) {
         var id = $(this).attr('data-id');

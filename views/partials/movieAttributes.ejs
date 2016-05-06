@@ -1,0 +1,17 @@
+<div class="row updateAttributes">
+    <div class="col-md-12 single-movie" data-id="<%= movie._id %>">
+		<div class="row title-row">
+			<div class="col-md-6 movie-attr name-rating">
+				<h4 class="title">Movie Title: <%= movie.title %> </h4>
+			</div>
+			<div class="col-md-6 movie-attr inc-dec">
+				<form class="featured" data-id="<%= movie._id %>" role="form">
+					<input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm" value="Make Featured Movie" />
+				</form>
+				<form class="delete" data-id="<%= movie._id %>" role="form">
+					<input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm" value="Remove from My Movies" />
+				</form>
+			</div>
+		</div>
+    </div>
+</div>

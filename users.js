@@ -120,7 +120,12 @@ MongoClient.connect(fullMongoUrl)
                     currentSessionId: null,
                     realName: realName,
                     profileText: null,
-                    movies: []
+                    movies: [],
+					featuredMovie: {
+						_id: null,
+						title: null,
+						cover: null
+					}
                 };
 
                 userCollection.insertOne(userObject);
@@ -167,4 +172,19 @@ MongoClient.connect(fullMongoUrl)
     exports.getUserByUsername = function (username) {
         return userCollection.findOne({ username: username });
     };
+	
+	exports.setFeaturedMovie = function(uid, mid) {
+		return movies.getMovie(mid).then(function(movie) {
+			if(!movie) {
+				return Promise.reject('Invalid movie ID');
+			}
+			userCollection
+				.update({ _id: uid }, { $set: { "featuredMovie._id": mid, "featuredMovie.title": movie.title, "featuredMovie.cover": movie.image }})
+				.then(function (res) {
+                    return 1;
+                });
+
+
+		});
+	};
 });

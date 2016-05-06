@@ -155,15 +155,12 @@ app.post("/api/movies/submit", function (request, response) {
 });
 
 app.post("/api/movies/:id/vote", function (request, response) {
-    console.log(request.body.rating);
     var rating = parseInt(request.body.rating);
     var id = request.params.id;
 
-    movieData.voteOnMovie(id, rating).then(function (response) {
-        console.log(response);
+    movieData.voteOnMovie(id, rating, response.locals.user._id).then(function (res) {
         response.json({ success: true });
     }).catch(function (err) {
-        console.log(err);
         response.json({ success: false });
     });
 });

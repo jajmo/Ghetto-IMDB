@@ -38,25 +38,24 @@
         });
     });
 
-    $('div').on('click', '.save-rating-btn', function (e) {
-        $(this).off('click');
+    $('.save-rating-btn').click(function (e) {
         var id = $(this).attr('data-id');
         var rating = parseInt($('#rating-' + id).val());
-        console.log(rating);
-        return;
 
-        var request = {
-            url: "/api/movies/" + id + "/vote",
-            method: "POST",
-            type: "application/json",
-            data: JSON.stringify({
-                rating: rating
-            })
-        };
+        if (rating) {
+            var request = {
+                url: "/api/movies/" + id + "/vote",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    rating: rating
+                })
+            };
 
-        $.ajax(request).then(function (response) {
-            console.log(response);
-        });
+            $.ajax(request).then(function (response) {
+                console.log(response);
+            });
+        }
     });
 
     $('h2').on('click', '.btn-collapse', function (e) {

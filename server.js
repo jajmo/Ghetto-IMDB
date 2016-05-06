@@ -63,7 +63,6 @@ app.get('/', function (request, response) {
 
         response.render('pages/index', {
             pageTitle: 'Browse',
-            pageHeader: 'Browse Movies',
             movies: movies,
             user: response.locals.user,
             watchOptions: config.serverConfig.watchOptions

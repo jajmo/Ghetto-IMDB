@@ -5,3 +5,15 @@ body {
 p, h1, h2, h3, h4 {
     color: #ecf0f1;
 }
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 20px;
+}

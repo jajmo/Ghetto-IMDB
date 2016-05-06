@@ -35,7 +35,9 @@
             <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
         </div>
     </div>
+    <% if (movies.length > 0) { %>
     <%- include('../partials/genre-carousel', { user: user, genre: "Saved Movies", movies: movies }); %>
+    <% } %>
     <% include ../partials/scripts %>
 </body>
 

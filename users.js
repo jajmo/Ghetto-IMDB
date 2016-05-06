@@ -125,9 +125,11 @@ MongoClient.connect(fullMongoUrl)
             .then(function (result) {
                 var ids = [];
 
-                result.movies.forEach(function (movie) {
-                    ids.push(movie.id);
-                });
+                if (result) {
+                    result.movies.forEach(function (movie) {
+                        ids.push(movie.id);
+                    });
+                }
 
                 return ids;
             });

@@ -2,7 +2,7 @@
 
 /* For Movie Update Containers */
 
-.updateAttributes { 
+.updateAttributes {
     margin-bottom: 20px;
     background-color: #fff;
     color: #34495e;
@@ -15,7 +15,7 @@
 }
 
 /* Title */
-.updateAttributes .movie-attr h4.title {
+.updateAttributes .movie-attr .title {
     display: inline;
     padding-right: 10px;
     color: #34495e;

@@ -29,15 +29,13 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-7">
+                <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
+                <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
+            </div>
             <div class="col-md-5 col-md-offset-7">
                 <img src="<%= user.featuredMovie.cover %>" alt="<%= user.featuredMovie.title %> Cover">
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-7">
-            <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
-            <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
         </div>
     </div>
     <% if (movies.length > 0) { %>

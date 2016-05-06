@@ -27,4 +27,72 @@ h2 {
 
 h3 {
     font-size: 20px;
+    margin-top: 10px;
+}
+
+
+main {
+    margin-bottom: 20px;
+}
+
+
+/* Profile Fields */
+
+.user-title {
+    padding-bottom: 30px;
+    border-bottom: 3px solid white;
+}
+
+ul.profile-traits {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.profile-traits > li {
+    padding-bottom: 20px;
+}
+
+label {
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.profile-traits > li > label {
+    margin-bottom: 0;
+}
+
+ul.profile-traits > li,
+ul.profile-traits > li p {
+    font-size: 22px;
+    padding-left: 0;
+}
+
+
+/* Movie Panels */
+label[for="featured-movie"] {
+    text-align: center;
+    width: 100%;
+}
+
+#featured-movie .movie-panel-overlay {
+    margin: 0;
+}
+
+.movie-panel-overlay h3 {
+    margin: 10px;
+}
+
+.carousel .movie-panel-overlay h3 {
+    font-size: 16px;
+}
+
+.movie-panel,
+.movie-panel img {
+    max-height: 300px;
+}
+
+.movie-panel {
+    width: fit-content;
+    width: -moz-fit-content;
+    margin: auto;
 }

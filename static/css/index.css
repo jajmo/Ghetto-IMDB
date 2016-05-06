@@ -44,45 +44,6 @@
     outline: none;
 }
 
-.movie-panel {
-    position: relative;
-}
-
-.movie-panel-overlay {
-    position: absolute;
-    display: none;
-    background-color: rgba(0, 0, 0, 0.7);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: 0 15px;
-}
-
-.movie-panel-overlay h3 {
-    margin: 15px 15px;
-    font-size: 28px;
-}
-
-.movie-panel-overlay a {
-    color: #ecf0f1;
-}
-
-.movie-panel-overlay a:hover {
-    text-decoration: underline;
-}
-
-/* dirty, but w/e. selects the button container divs */
-.movie-panel-overlay > div {
-    position: absolute;
-    bottom: 15px;
-}
-
-.movie-panel-overlay .save-button {
-    position: absolute;
-    bottom: 0;
-}
-
 h1, h2, h3, h4, h5, h6 {
     color: #ecf0f1;
 }

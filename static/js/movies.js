@@ -13,7 +13,7 @@
         var state = $(this).attr('data-state');
 
         var request = {
-            url: "/api/user/watchMovie/" + id,
+            url: "/api/user/watchMovie/" + id.substring(0, id.indexOf('_')),
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify({
@@ -44,7 +44,7 @@
 
         if (rating) {
             var request = {
-                url: "/api/movies/" + id + "/vote",
+                url: "/api/movies/" + id.substring(0, id.indexOf('_')) + "/vote",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({

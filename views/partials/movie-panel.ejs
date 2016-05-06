@@ -4,34 +4,34 @@
         <div class="movie-panel-overlay">
             <h3><a href="/movie/<%= movie._id %>"><%= movie.title %></a></h3>
                 <% if (user && watchOptions !== undefined) { %>
-                    <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>-<%= genre %>" data-toggle="collapse">
-                        <button class="btn btn-primary save-button" data-id="<%= movie._id %>-<%= genre %>">Save</button>
+                    <div class="col-md-12 collapse in" id="save-button-div-<%= movie._id %>_<%= genre %>" data-toggle="collapse">
+                        <button class="btn btn-primary save-button" data-id="<%= movie._id %>_<%= genre %>">Save</button>
                     </div>
-                    <div class="col-md-12 collapse" id="watched-buttons-<%= movie._id %>-<%= genre %>" data-toggle="collapse">
+                    <div class="col-md-12 collapse" id="watched-buttons-<%= movie._id %>_<%= genre %>" data-toggle="collapse">
                         <button
                             class="btn btn-default watched-btn"
-                            data-id="<%= movie._id %>-<%= genre %>"
+                            data-id="<%= movie._id %>_<%= genre %>"
                             data-state="<%= watchOptions.notWatched %>"
                         >Have not watched</button>
                         <button
                             class="btn btn-primary watched-btn"
-                            data-id="<%= movie._id %>-<%= genre %>"
+                            data-id="<%= movie._id %>_<%= genre %>"
                             data-state="<%= watchOptions.watched %>"
                         >Have watched</button>
                         <button
                             class="btn btn-warning watched-btn"
-                            data-id="<%= movie._id %>-<%= genre %>"
+                            data-id="<%= movie._id %>_<%= genre %>"
                             data-state="<%= watchOptions.willNotWatch %>"
                         >Will not watch</button>
                     </div>
-                    <div class="col-md-12 collapse" id="rate-<%= movie._id %>-<%= genre %>" data-toggle="collapse">
+                    <div class="col-md-12 collapse" id="rate-<%= movie._id %>_<%= genre %>" data-toggle="collapse">
                         <form>
                             <div class="row">
                                 <label for="rating" class="form-control-label col-md-12">Rating</label>
                             </div>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <input type="text" size="1" name="rating" id="rating-<%= movie._id %>" class="form-control rating">
+                                    <input type="text" size="1" name="rating" id="rating-<%= movie._id %>_<%= genre %>" class="form-control rating">
                                 </div>
                                 <!-- TODO: Fix space between input and span -->
                                 <div class="col-md-7">
@@ -40,10 +40,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" data-id="<%= movie._id %>-<%= genre %>" class="btn btn-success save-rating-btn">Save</button>
+                                    <button type="button" data-id="<%= movie._id %>_<%= genre %>" class="btn btn-success save-rating-btn">Save</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="button" data-id="<%= movie._id %>-<%= genre %>" class="btn btn-warning cancel-rating-btn">Cancel</button>
+                                    <button type="button" data-id="<%= movie._id %>_<%= genre %>" class="btn btn-warning cancel-rating-btn">Cancel</button>
                                 </div>
                             </div>
                         </form>

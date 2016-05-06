@@ -151,9 +151,7 @@ MongoClient.connect(fullMongoUrl)
                             image: movie.Poster,
                             actors: movie.Actors,
                             director: movie.Director,
-                            userTotalRating: 0,
-                            userVotes: 0,
-                            voters: [],
+                            userVotes: [],
                             criticRating: movie.imdbRating
                         };
 
@@ -178,17 +176,13 @@ MongoClient.connect(fullMongoUrl)
             return Promise.reject('Invalid rating: ' + rating);
         }
 
-        return movieCollection.findOne({ _id: id, voters: { $ne: uid }}).then(function (movie) {
+        return movieCollection.findOne({ _id: id, "userVotes.userID": { $ne: uid }}).then(function (movie) {
             if (!movie) {
                 return Promse.reject('Invalid movie');
             } else {
                 movieCollection.update({ _id: movie._id },
                     {
-                        $set: {
-                        userVotes: movie.userVotes + 1,
-                        userTotalRating: movie.userTotalRating + rating
-                        },
-                        $push: { voters: uid }
+                        $push: { userVotes: { userID: uid, rating: rating }}
                     }
                 ).then(function (res) {
                     return 'Good';

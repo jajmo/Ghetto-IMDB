@@ -61,9 +61,10 @@ app.get('/', function (request, response) {
             });
         });
 
-        response.render('pages/index', { 
-            pageTitle: 'Browse', 
-            movies: movies, 
+        response.render('pages/index', {
+            pageTitle: 'Browse',
+            pageHeader: 'Browse Movies',
+            movies: movies,
             user: response.locals.user,
             watchOptions: config.serverConfig.watchOptions
         });
@@ -72,6 +73,66 @@ app.get('/', function (request, response) {
 
 app.get('/submit', function (request, response) {
     response.render('pages/submitMovie', { user: response.locals.user });
+});
+
+app.post('/search', function (request, response) {
+    var query = request.body.search;
+
+    //empty searches go back to the browse page
+    if (!query || query === '')
+        response.redirect('/');
+
+    //query the database for matches in multiple categories
+    movieData.getMoviesByTitle(query).then(function (titleList) {
+        movieData.getMoviesByGenre(query).then(function (genreList) {
+            movieData.getMoviesByActor(query).then(function (actorList) {
+                movieData.getMoviesByDirector(query).then(function (directorList) {
+                    //dat indent tho
+                    var movies = [];
+
+                    //populate the 'movies' list with search matches by category
+                    titleList.forEach(function (movie) {
+                        if (!movies['By Title']) {
+                            movies['By Title'] = [];
+                        }
+
+                        movies['By Title'].push(movie);
+                    });
+                    genreList.forEach(function(movie) {
+                        if (!movies['By Genre']) {
+                            movies['By Genre'] = [];
+                        }
+
+                        movies['By Genre'].push(movie);
+                    });
+                    actorList.forEach(function(movie) {
+                        if (!movies['By Actors']) {
+                            movies['By Actors'] = [];
+                        }
+
+                        movies['By Actors'].push(movie);
+                    });
+                    directorList.forEach(function(movie) {
+                        if (!movies['By Director']) {
+                            movies['By Director'] = [];
+                        }
+
+                        movies['By Director'].push(movie);
+                    });
+
+                    //use the index page to display search results in the same
+                    //layout as the main browse page
+                    response.render('pages/index', {
+                        pageTitle: 'Search Results',
+                        pageHeader: 'Search Results',
+                        movies: movies,
+                        user: response.locals.user,
+                        watchOptions: config.serverConfig.watchOptions
+                    });
+                });
+            });
+        });
+    });
 });
 
 app.post('/api/movies/submit', function (request, response) {

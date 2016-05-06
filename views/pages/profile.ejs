@@ -3,44 +3,57 @@
 
 <head>
     <%- include('../partials/head', { pageTitle: user.username }); %>
-    <link type="text/css" ref="stylesheet" src="/assets/css/profile.css" />
     <link type="text/css" rel="stylesheet" href="/assets/css/index.css" />
+    <link type="text/css" rel="stylesheet" href="/assets/css/movie-panel.css" />
+    <link type="text/css" rel="stylesheet" href="/assets/css/profile.css" />
 </head>
 
 <body class="container-fluid">
     <% include ../partials/nav %>
-    <h2><%= user.username %>'s Profile</h2>
+
+    <main class="container">
+        <h2 class="user-title"><%= user.username %>'s profile</h2>
         <div class="row">
-            <div class="col-md-12">
-                <h2>Real name: <%= user.realName %></h2>
-            </div>
+            <!-- Left side -->
+            <section class="col-md-6">
+                <ul class="profile-traits">
+                    <li>
+                        <label for="profile-fullname">Name</label>
+                        <div id="profile-fullname"><%= user.realName %></div>
+                    </li>
+                    <li>
+                        <label for="profile-text">Bio</label>
+                        <p
+                            id="profile-text"
+                            data-id="<%= user._id %>"
+                        ><%-  user.profileText
+                                    ? user.profileText
+                                    : "<i>Uh oh, there's nothing here!</i>"
+                            %>
+                        </p>
+                    </li>
+                </ul>
+            </section>
+            <!-- Right side -->
+            <section class="col-md-6">
+                <label for="featured-movie">Featured Movie</label>
+                <div id="featured-movie" class="movie-panel">
+                    <img src="<%= user.featuredMovie.cover %>" alt="<%= user.featuredMovie.title %> Cover">
+                    <div class="movie-panel-overlay">
+                        <h3>
+                            <a href="/movie/<%= user.featuredMovie._id %>">
+                                <%= user.featuredMovie.title %>
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+            </section>
+            <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
         </div>
-        <div class="row">
-            <div class="col-md-7">
-                <h3>Profile</h3>
-            </div>
-            <div class="col-md-5">
-                <h3>Featured Movie</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-md-offset-7">
-                <h4><%= user.featuredMovie.title %></h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7">
-                <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
-                <p id="profile-text" data-id="<%= user._id %>"><%- user.profileText ? user.profileText : "<i>Uh oh, there's nothing here!</i>" %></p>
-            </div>
-            <div class="col-md-5 col-md-offset-7">
-                <img src="<%= user.featuredMovie.cover %>" alt="<%= user.featuredMovie.title %> Cover">
-            </div>
-        </div>
-    </div>
-    <% if (movies.length > 0) { %>
-    <%- include('../partials/genre-carousel', { user: user, genre: "Saved Movies", movies: movies }); %>
-    <% } %>
+        <% if (movies.length > 0) { %>
+        <%- include('../partials/genre-carousel', { user: user, genre: "Saved Movies", movies: movies }); %>
+        <% } %>
+    </main>
     <% include ../partials/scripts %>
 </body>
 

@@ -1,5 +1,5 @@
 <div class="col-md-2">
-    <div class="movie-panel row" id="movie-panel-<%= movie._id %>">
+    <div class="movie-panel row" id="movie-panel-<%= movie._id %>_<%= genre %>">
         <img class="img-responsive col-md-12" src="<%= movie.image %>" alt="<%= movie.title %> Cover">
         <div class="movie-panel-overlay">
             <h3><a href="/movie/<%= movie._id %>"><%= movie.title %></a></h3>

@@ -39,6 +39,9 @@ app.use(function (request, response, next) {
             restrictedRoutes.forEach(function (route) {
                 if (route.test(url)) {
                     response.redirect('/');
+                    next('Access to \'' +
+                             request.url +
+                             '\' disallowed. Redirecting to \'/\'');
                 }
             });
         }

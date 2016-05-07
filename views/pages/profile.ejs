@@ -37,16 +37,20 @@
             <!-- Right side -->
             <section class="col-md-6">
                 <label for="featured-movie">Featured Movie</label>
-                <div id="featured-movie" class="movie-panel">
-                    <img src="<%= user.featuredMovie.cover %>" alt="<%= user.featuredMovie.title %> Cover">
-                    <div class="movie-panel-overlay">
-                        <h3>
-                            <a href="/movie/<%= user.featuredMovie._id %>">
-                                <%= user.featuredMovie.title %>
-                            </a>
-                        </h3>
+<%      if (user.featuredMovie.title != null) {     %>
+                    <div id="featured-movie" class="movie-panel">
+                        <img src="<%= user.featuredMovie.cover %>" alt="<%= user.featuredMovie.title %> Cover">
+                        <div class="movie-panel-overlay">
+                            <h3>
+                                <a href="/movie/<%= user.featuredMovie._id %>">
+                                    <%= user.featuredMovie.title %>
+                                </a>
+                            </h3>
+                        </div>
                     </div>
-                </div>
+<%      } else {                                    %>
+                    <div id="featured-movie">No featured movie has been selected</div>
+<%      }                                           %>
             </section>
             <!-- TODO: This will allow for HTML in the user's profile to be rendered. This is a problem. -->
         </div>

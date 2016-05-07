@@ -1,6 +1,6 @@
 <section class="genre-carousel">
     <h2>
-        <%= genre %>
+        <%= genre %> (<%= movies.length %>)
         <% genre = (genre === "Saved Movies") ? "saved-movies" : genre %>
         <button
             data-toggle="collapse"

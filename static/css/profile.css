@@ -75,6 +75,10 @@ label[for="featured-movie"] {
     width: 100%;
 }
 
+#featured-movie {
+    text-align: center;
+}
+
 #featured-movie.movie-panel,
 #featured-movie.movie-panel img {
     padding: 0;

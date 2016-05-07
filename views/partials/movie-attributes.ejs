@@ -5,10 +5,10 @@
                 <h3 class="title">Movie Title: <%= movie.title %> </h3>
             </div>
             <div class="col-md-6 movie-attr inc-dec">
-                <form class="featured" data-id="<%= movie._id %>" role="form">
+                <form class="featured" data-id="<%= movie._id %>">
                     <input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm" value="Make Featured Movie" />
                 </form>
-                <form class="delete" data-id="<%= movie._id %>" role="form">
+                <form class="delete" data-id="<%= movie._id %>">
                     <input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm delete-btn" value="Remove from My Movies" />
                 </form>
             </div>

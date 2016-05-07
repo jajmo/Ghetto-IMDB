@@ -3,6 +3,7 @@
 
 <head>
     <%- include('../partials/head', { pageTitle: 'Login' }); %>
+    <link type="text/css" rel="stylesheet" href="/assets/css/login.css" />
 </head>
 
 <body>
@@ -10,8 +11,8 @@
         <header>
             <h1>Ghetto IMDB</h1>
         </header>
-        <main class="row">
-            <section class="col-sm-6 m-x-2">
+        <main class="container">
+            <section class="col-sm-5 m-x-2">
                 <h2>Login</h2>
                 <form action="/login" method="POST" class="form-horizontal">
                     <div class="form-group">
@@ -23,11 +24,11 @@
                         <input type="password" placeholder="Password" name="password" id="password" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Login</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </section>
-            <section class="col-sm-6 m-x-2">
+            <section class="col-sm-5 col-sm-offset-2">
                 <h2>Register</h2>
                 <form action="/register" method="POST" class="form-horizontal">
                     <div class="form-group">
@@ -43,7 +44,7 @@
                         <input type="password" placeholder="Password" name="password" id="password" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Register</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </div>
                 </form>
             </section>

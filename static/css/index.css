@@ -25,6 +25,10 @@
     overflow: hidden;
 }
 
+.carousel-inner {
+    overflow: visible;
+}
+
 .carousel-control {
     padding-top: 10%;
     width: 5%;
@@ -32,7 +36,9 @@
 
 .carousel-inner .item .row {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    max-height: 370px;
+    margin-left: -5px;
 }
 
 .genre-carousel .expand-button {

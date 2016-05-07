@@ -2,9 +2,13 @@
 
 /* For Movie Update Containers */
 
+main h2 {
+    margin-left: -15px;
+}
+
 .updateAttributes {
     margin-bottom: 20px;
-    background-color: #fff;
+    background-color: #ecf0f1;
     color: #34495e;
     border-radius: 6px;
     padding: 20px;
@@ -15,10 +19,11 @@
 }
 
 /* Title */
-.updateAttributes .movie-attr .title {
+.updateAttributes .title {
     display: inline;
     padding-right: 10px;
     color: #34495e;
+    font-size: 28px;
 }
 
 .updateAttributes .movie-attr form.featured,
@@ -31,3 +36,32 @@
 .updateAttributes .movie-attr form input.btn {
     width: 165px;
 }
+
+.row.actions {
+    margin-top: 10px;
+}
+
+.row.actions > * {
+    display: inline-block;
+}
+
+.details {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+    border: none;
+}
+
+.details > tbody > tr > td {
+    border: none;
+    width: 150px;
+    padding: 1px;
+}
+
+@media (max-width: 722px) {
+    .details {
+        display: none;
+    }
+}
+

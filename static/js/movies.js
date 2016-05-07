@@ -1,3 +1,5 @@
+/*global Ghetto*/
+
 (function ($) {
 
     $('div').on('click', '.save-button', function (e) {
@@ -18,9 +20,9 @@
         }
 
         var req = {
-            url: "/api/user/removeMovie",
-            method: "POST",
-            contentType: "application/json",
+            url: '/api/user/removeMovie',
+            method: 'POST',
+            contentType: 'application/json',
             data: JSON.stringify({
                 id: id
             })
@@ -29,6 +31,9 @@
         $.ajax(req).then(function (res) {
             if (res.success === true) {
                 $('.movie-' + id).collapse('hide');
+                Ghetto.alert('Movie deleted!');
+            } else {
+                Ghetto.alert(res.error, { level: 'danger' });
             }
         });
     });
@@ -40,9 +45,9 @@
         //trim genre off the end of id (it was there for uniqueness on the page)
         id = id.substring(0, id.indexOf('_'));
         var request = {
-            url: "/api/user/watchMovie/" + id,
-            method: "POST",
-            contentType: "application/json",
+            url: '/api/user/watchMovie/' + id,
+            method: 'POST',
+            contentType: 'application/json',
             data: JSON.stringify({
                 state: state
             })
@@ -69,17 +74,19 @@
         e.preventDefault();
         var mid = $(this).attr('data-id');
 
-         var request = {
-            url: "/movies/my/feature/" + mid,
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({
-            })
+        var request = {
+            url: '/movies/my/feature/' + mid,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({})
         };
 
         $.ajax(request).then(function (response) {
             if(response.err) {
                 console.log(response.err);
+                Ghetto.alert(response.err, { level: 'danger' });
+            } else {
+                Ghetto.alert('Featured movie saved!');
             }
         });
     });
@@ -92,9 +99,9 @@
         id = id.substring(0, id.indexOf('_'));
         if (rating) {
             var request = {
-                url: "/api/movies/" + id + "/vote",
-                method: "POST",
-                contentType: "application/json",
+                url: '/api/movies/' + id + '/vote',
+                method: 'POST',
+                contentType: 'application/json',
                 data: JSON.stringify({
                     rating: rating
                 })
@@ -122,7 +129,7 @@
         }).bind('mouseleave', function () {
             $(this).find('.movie-panel-overlay').fadeOut(150);
         });
-    };
+    }
 
     $('h2').on('click', '.btn-collapse', function (e) {
         if (this.dataset.expanded === 'true') {

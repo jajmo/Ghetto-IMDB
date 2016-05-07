@@ -70,8 +70,15 @@ ul.profile-traits > li p {
 
 /* Movie Panels */
 label[for="featured-movie"] {
+    margin-top: 4px;
     text-align: center;
     width: 100%;
+}
+
+#featured-movie.movie-panel,
+#featured-movie.movie-panel img {
+    padding: 0;
+    max-height: 400px;
 }
 
 #featured-movie .movie-panel-overlay {
@@ -88,7 +95,7 @@ label[for="featured-movie"] {
 
 .movie-panel,
 .movie-panel img {
-    max-height: 300px;
+    max-height: 230px;
 }
 
 .movie-panel {

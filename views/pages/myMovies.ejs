@@ -8,10 +8,13 @@
 
 <body class="container-fluid">
     <% include ../partials/nav %>
-    <h2>My Movies</h2>
-    <% movies.forEach(function(movie){ %>
-        <% include ../partials/movie-attributes %>
-    <% }) %>
+
+    <main class="container">
+        <h2>My Movies</h2>
+        <% movies.forEach(function(movie){ %>
+            <% include ../partials/movie-attributes %>
+        <% }) %>
+    </main>
 
     <% include ../partials/scripts %>
 </body>

@@ -1,17 +1,47 @@
 <div class="row updateAttributes collapse in movie-<%= movie._id %>">
     <div class="col-md-12 single-movie" data-id="<%= movie._id %>">
         <div class="row title-row">
-            <div class="col-md-6 movie-attr name-rating">
-                <h4 class="title">Movie Title: <%= movie.title %> </h4>
-            </div>
-            <div class="col-md-6 movie-attr inc-dec">
-                <form class="featured" data-id="<%= movie._id %>" role="form">
-                    <input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm" value="Make Featured Movie" />
-                </form>
-                <form class="delete" data-id="<%= movie._id %>" role="form">
-                    <input type="submit" data-id="<%= movie._id %>" class="btn btn-primary btn-sm delete-btn" value="Remove from My Movies" />
-                </form>
-            </div>
+            <h3 class="title"><%= movie.title %></h3>
         </div>
+        <div class="row actions">
+            <form class="featured" data-id="<%= movie._id %>" role="form">
+                <input
+                    type="submit"
+                    data-id="<%= movie._id %>"
+                    class="btn btn-primary btn-sm"
+                    value="Make Featured Movie" />
+            </form>
+            <form class="delete" data-id="<%= movie._id %>" role="form">
+                <input
+                    type="submit"
+                    data-id="<%= movie._id %>"
+                    class="btn btn-danger btn-sm delete-btn"
+                    value="Remove from My Movies" />
+            </form>
+        </div>
+        <table class="table details">
+            <tr>
+                <td><strong>Director</strong></td>
+                <td><%= movie.director %></td>
+            </tr>
+
+            <tr>
+                <td><strong>User Rating:</strong></td>
+                <td>
+<%        var sum = 0;
+
+                    movie.userVotes.forEach(function (vote) {
+                        sum += vote.rating;
+                    });
+                    sum /= movie.userVotes.length;            %>
+
+                    <%= sum || "Not yet rated!" %>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Critic Rating:</strong></td>
+                <td><%= movie.criticRating %></td>
+            </tr>
+        </table>
     </div>
 </div>

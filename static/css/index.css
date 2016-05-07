@@ -37,7 +37,7 @@
 .carousel-inner .item .row {
     display: flex;
     align-items: stretch;
-    max-height: 370px;
+    max-height: 20vw;
     margin-left: -5px;
 }
 

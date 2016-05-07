@@ -26,9 +26,18 @@
     margin: 10px 0;
 }
 
-.movie-panel-overlay h3 {
-    margin: 15px 15px;
-    font-size: 28px;
+@media (min-width: 766px) {
+    .movie-panel-overlay h3 {
+        margin: 1vw;
+        font-size: 2vw;
+    }
+}
+
+@media (max-width: 766px) {
+    .movie-panel-overlay h3 {
+        margin: 1vw;
+        font-size: 3vw;
+    }
 }
 
 .movie-panel-overlay a {

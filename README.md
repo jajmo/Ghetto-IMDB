@@ -10,3 +10,9 @@ from third-party sources to provide a full profile to users for each movie.
 - Ability to search movies based on multiple criteria
 - User can add movies to their profile
 - Automatic retrieval of metadata
+
+## Running
+- Make sure MongoDB is running
+- Do `npm install`
+- Then `node server.js`
+- Navigate to [localhost:3000](localhost:300)

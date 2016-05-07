@@ -190,6 +190,10 @@ MongoClient.connect(fullMongoUrl)
             }
         });
     };
+
+    exports.pullVote = function (mid, uid) {
+        return movieCollection.update({ _id: mid }, { $pull: { userVotes: { userID: uid }}});
+    }
 });
 
 

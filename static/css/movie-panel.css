@@ -1,0 +1,51 @@
+.movie-panel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.movie-panel img {
+    object-fit: cover;
+    height: auto;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.19),
+                -5px 0 10px rgba(0, 0, 0, 0.19),
+                0 5px 10px rgba(0, 0, 0, 0.19);
+    padding: 0;
+}
+
+.movie-panel-overlay {
+    position: absolute;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.movie-panel-overlay h3 {
+    margin: 15px 15px;
+    font-size: 28px;
+}
+
+.movie-panel-overlay a {
+    color: #ecf0f1;
+}
+
+.movie-panel-overlay a:hover {
+    text-decoration: underline;
+}
+
+/* dirty, but w/e. selects the button container divs */
+.movie-panel-overlay > div {
+    position: absolute;
+    bottom: 15px;
+}
+
+.movie-panel-overlay .save-button {
+    position: absolute;
+    bottom: 0;
+}
